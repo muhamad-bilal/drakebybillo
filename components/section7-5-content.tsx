@@ -104,17 +104,6 @@ export function Section75Content({ isActive = false }: Section75ContentProps) {
             </p>
           </div>
 
-          {/* Bottom accent */}
-          <div className={`mt-12 flex items-center justify-center gap-6 transition-all duration-700 delay-700 ${isVisible ? "opacity-100" : "opacity-0"}`}>
-            <div className="h-[1px] w-24 bg-gradient-to-r from-transparent to-amber-500/30" />
-            <span className="text-xs tracking-[0.3em] text-foreground/30 uppercase" style={{ fontFamily: "'Outfit', sans-serif" }}>
-              Continue scrolling
-            </span>
-            <svg className="w-4 h-4 text-foreground/30 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-            <div className="h-[1px] w-24 bg-gradient-to-l from-transparent to-amber-500/30" />
-          </div>
         </div>
       </div>
     </section>

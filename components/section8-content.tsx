@@ -9,36 +9,22 @@ interface YearData {
   songs: string[]
 }
 
-interface EraData {
-  songs: number
-  number_ones: number
-  top_tens: number
-}
-
 interface SummaryData {
   total_entries?: number
   number_one_hits?: number
   top_ten_hits?: number
   total_weeks_on_chart?: number
-  average_weeks_per_song?: number
-  average_peak_position?: number
-  longest_running_song?: {
-    title: string
-    weeks: number
-    peak: number
-  }
   first_chart_entry?: {
     title: string
     date: string
     peak: number
   }
-  yearly_breakdown?: Record<string, YearData>
-  era_comparison?: {
-    origin: EraData
-    ascent: EraData
-    peak: EraData
-    recent: EraData
+  longest_running_song?: {
+    title: string
+    weeks: number
+    peak: number
   }
+  yearly_breakdown?: Record<string, YearData>
 }
 
 interface DataStructure {
@@ -49,22 +35,21 @@ interface Section8ContentProps {
   isActive?: boolean
 }
 
-interface Era {
-  name: string
-  period: string
-  years: string
-  songs: number
-  number_ones: number
-  top_tens: number
-  color: string
-  description: string
+interface Milestone {
+  year: string
+  title: string
+  subtitle: string
+  stat: string
+  statLabel: string
+  isHighlight: boolean
 }
 
 export function Section8Content({ isActive = false }: Section8ContentProps) {
   const [data, setData] = useState<DataStructure | null>(null)
   const [loading, setLoading] = useState(true)
   const [isVisible, setIsVisible] = useState(false)
-  const [hoveredEra, setHoveredEra] = useState<string | null>(null)
+  const [hoveredMilestone, setHoveredMilestone] = useState<number | null>(null)
+  const [hoveredBar, setHoveredBar] = useState<number | null>(null)
 
   useEffect(() => {
     fetch("/data/drake_billboard_data.json")
@@ -81,53 +66,83 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
 
   // Extract data
   const summary = data?.section_8_summary
-  const eraComparison = summary?.era_comparison
+  const yearlyBreakdown = summary?.yearly_breakdown || {}
+  const years = Object.keys(yearlyBreakdown).sort()
 
-  // Era data with descriptions
-  const eras: Era[] = useMemo(() => [
-    {
-      name: "Origin",
-      period: "2009–2011",
-      years: "3 years",
-      songs: eraComparison?.origin?.songs || 0,
-      number_ones: eraComparison?.origin?.number_ones || 0,
-      top_tens: eraComparison?.origin?.top_tens || 0,
-      color: "bg-foreground/40",
-      description: "The breakthrough. From So Far Gone to Take Care."
-    },
-    {
-      name: "Ascent",
-      period: "2012–2015",
-      years: "4 years",
-      songs: eraComparison?.ascent?.songs || 0,
-      number_ones: eraComparison?.ascent?.number_ones || 0,
-      top_tens: eraComparison?.ascent?.top_tens || 0,
-      color: "bg-foreground/60",
-      description: "Building momentum. Nothing Was The Same to IYRTITL."
-    },
-    {
-      name: "Peak",
-      period: "2016–2018",
-      years: "3 years",
-      songs: eraComparison?.peak?.songs || 0,
-      number_ones: eraComparison?.peak?.number_ones || 0,
-      top_tens: eraComparison?.peak?.top_tens || 0,
-      color: "bg-amber-500",
-      description: "Total domination. Views. More Life. Scorpion."
-    },
-    {
-      name: "Recent",
-      period: "2019–2025",
-      years: "7 years",
-      songs: eraComparison?.recent?.songs || 0,
-      number_ones: eraComparison?.recent?.number_ones || 0,
-      top_tens: eraComparison?.recent?.top_tens || 0,
-      color: "bg-amber-500/70",
-      description: "Sustained excellence. CLB to For All The Dogs."
-    },
-  ], [eraComparison])
+  // Calculate cumulative stats for timeline
+  const timelineData = useMemo(() => {
+    let cumulativeSongs = 0
+    let cumulativeOnes = 0
 
-  const maxSongs = Math.max(...eras.map(e => e.songs), 1)
+    return years.map(year => {
+      const yearData = yearlyBreakdown[year]
+      cumulativeSongs += yearData?.entries || 0
+      cumulativeOnes += yearData?.number_ones || 0
+
+      return {
+        year,
+        entries: yearData?.entries || 0,
+        numberOnes: yearData?.number_ones || 0,
+        cumulativeSongs,
+        cumulativeOnes,
+      }
+    })
+  }, [years, yearlyBreakdown])
+
+  // Key milestones for the journey
+  const milestones: Milestone[] = useMemo(() => [
+    {
+      year: "2009",
+      title: "The Beginning",
+      subtitle: "Best I Ever Had debuts",
+      stat: years.length > 0 ? String(yearlyBreakdown["2009"]?.entries || 0) : "0",
+      statLabel: "First entries",
+      isHighlight: false,
+    },
+    {
+      year: "2010",
+      title: "First #1",
+      subtitle: "What's My Name? with Rihanna",
+      stat: "1",
+      statLabel: "#1 hit",
+      isHighlight: false,
+    },
+    {
+      year: "2016",
+      title: "Views Era",
+      subtitle: "One Dance dominates",
+      stat: String(yearlyBreakdown["2016"]?.entries || 0),
+      statLabel: "entries",
+      isHighlight: false,
+    },
+    {
+      year: "2018",
+      title: "Scorpion",
+      subtitle: "God's Plan, Nice For What, In My Feelings",
+      stat: "3",
+      statLabel: "consecutive #1s",
+      isHighlight: false,
+    },
+    {
+      year: "2021",
+      title: "CLB",
+      subtitle: "Way 2 Sexy tops charts",
+      stat: String(yearlyBreakdown["2021"]?.entries || 0),
+      statLabel: "entries",
+      isHighlight: false,
+    },
+    {
+      year: years[years.length - 1] || "2024",
+      title: "The Legacy",
+      subtitle: `${summary?.total_entries || 0} total chart entries`,
+      stat: String(summary?.number_one_hits || 0),
+      statLabel: "#1 hits total",
+      isHighlight: false,
+    },
+  ], [years, yearlyBreakdown, summary])
+
+  // Calculate max for scaling
+  const maxEntries = Math.max(...timelineData.map(d => d.entries), 1)
 
   // Trigger animation
   useEffect(() => {
@@ -150,158 +165,241 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap');
       `}</style>
 
-      {/* Main content - Full screen centered */}
-      <div className="relative z-10 w-full h-full flex items-center justify-center">
-        <div className="w-full max-w-6xl mx-auto px-8">
+      {/* Main content - Full screen */}
+      <div className="relative z-10 w-full h-full flex flex-col justify-center">
+        <div className="w-full max-w-7xl mx-auto px-8">
 
           {/* Title */}
-          <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center mb-10 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h1
               className="text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight"
               style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             >
               <span className="text-foreground/90">THE</span>{" "}
-              <span className="text-amber-500">EVOLUTION</span>
+              <span className="text-amber-500">JOURNEY</span>
             </h1>
             <p
-              className="text-base text-foreground/50 mt-4 max-w-xl mx-auto"
+              className="text-base text-foreground/50 mt-3"
               style={{ fontFamily: "'Outfit', sans-serif" }}
             >
-              Four eras. One unstoppable trajectory.
+              {years[0]} to {years[years.length - 1]} — A decade of dominance
             </p>
           </div>
 
-          {/* Era Columns */}
-          <div className="flex gap-4 h-[420px]">
-            {eras.map((era, i) => {
-              const barHeight = (era.songs / maxSongs) * 280
-              const isHovered = hoveredEra === era.name
-              const isPeak = era.name === "Peak"
+          {/* Timeline visualization */}
+          <div className={`relative transition-all duration-700 delay-200 ${isVisible ? "opacity-100" : "opacity-0"}`}>
 
-              return (
+            {/* Chart label */}
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="h-[1px] w-8 bg-amber-500/30" />
+              <span
+                className="text-xs tracking-[0.2em] text-amber-500/70 uppercase"
+                style={{ fontFamily: "'Outfit', sans-serif" }}
+              >
+                Chart Entries Per Year
+              </span>
+              <div className="h-[1px] w-8 bg-amber-500/30" />
+            </div>
+
+            {/* Year bars - Activity graph with labels */}
+            <div className="flex items-end justify-center gap-[3px] h-[140px] mb-2 px-4">
+              {timelineData.map((item, i) => {
+                const barHeight = (item.entries / maxEntries) * 110
+                const hasNumberOne = item.numberOnes > 0
+                const isHovered = hoveredBar === i
+
+                return (
+                  <div
+                    key={item.year}
+                    className="flex-1 max-w-[36px] flex flex-col items-center cursor-pointer"
+                    style={{
+                      opacity: isVisible ? 1 : 0,
+                      transition: `opacity 0.5s ease ${0.3 + i * 0.03}s`,
+                    }}
+                    onMouseEnter={() => setHoveredBar(i)}
+                    onMouseLeave={() => setHoveredBar(null)}
+                  >
+                    {/* Hover tooltip */}
+                    {isHovered && (
+                      <div
+                        className="text-xs text-amber-500 mb-1"
+                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                      >
+                        {item.entries}
+                      </div>
+                    )}
+                    <div
+                      className={`w-full rounded-t transition-all duration-500 ${
+                        hasNumberOne ? "bg-amber-500" : "bg-foreground/30"
+                      } ${isHovered ? "ring-1 ring-amber-400" : ""}`}
+                      style={{
+                        height: isVisible ? `${Math.max(barHeight, 4)}px` : "0px",
+                        transitionDelay: `${0.4 + i * 0.03}s`,
+                      }}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Timeline line */}
+            <div className="relative h-2 mx-4">
+              <div className="absolute inset-0 bg-foreground/10 rounded-full" />
+              <div
+                className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-foreground/40 via-amber-500 to-amber-500 rounded-full"
+                style={{
+                  width: isVisible ? "100%" : "0%",
+                  transition: "width 1.5s ease-out 0.5s",
+                }}
+              />
+            </div>
+
+            {/* Year labels - aligned with bars */}
+            <div className="flex justify-center gap-[3px] px-4 mt-2">
+              {timelineData.map((item, i) => (
                 <div
-                  key={era.name}
-                  className={`flex-1 flex flex-col rounded-2xl border transition-all duration-500 cursor-pointer overflow-hidden ${
-                    isHovered
-                      ? "bg-gradient-to-b from-amber-500/15 to-transparent border-amber-500/40 scale-[1.02]"
-                      : isPeak
-                      ? "bg-gradient-to-b from-amber-500/10 to-transparent border-amber-500/20"
-                      : "bg-foreground/[0.02] border-foreground/10"
-                  }`}
+                  key={item.year}
+                  className="flex-1 max-w-[36px] text-center"
                   style={{
                     opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? "translateY(0)" : "translateY(40px)",
-                    transition: `all 0.7s cubic-bezier(0.4, 0, 0.2, 1) ${0.1 + i * 0.1}s`,
+                    transition: `opacity 0.5s ease ${0.8 + i * 0.02}s`,
                   }}
-                  onMouseEnter={() => setHoveredEra(era.name)}
-                  onMouseLeave={() => setHoveredEra(null)}
                 >
-                  {/* Era Header */}
-                  <div className="p-5 pb-3">
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className={`w-2 h-2 rounded-full ${era.color}`} />
-                      <span
-                        className={`text-2xl transition-colors ${isHovered || isPeak ? "text-amber-500" : "text-foreground/80"}`}
-                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                      >
-                        {era.name}
-                      </span>
-                    </div>
+                  <span
+                    className={`text-xs ${hoveredBar === i ? "text-amber-500" : "text-foreground/40"}`}
+                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                  >
+                    '{item.year.slice(-2)}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Legend */}
+            <div className="flex items-center justify-center gap-6 mt-4 mb-6">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm bg-amber-500" />
+                <span className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                  Year with #1 hit
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm bg-foreground/30" />
+                <span className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                  No #1 hit
+                </span>
+              </div>
+            </div>
+
+            {/* Milestone cards */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6">
+              {milestones.map((milestone, i) => {
+                const isHovered = hoveredMilestone === i
+
+                return (
+                  <div
+                    key={milestone.year}
+                    className={`p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                      isHovered
+                        ? "bg-gradient-to-b from-amber-500/20 to-transparent border-amber-500/50 scale-105"
+                        : milestone.isHighlight
+                        ? "bg-gradient-to-b from-amber-500/10 to-transparent border-amber-500/30"
+                        : "bg-foreground/[0.03] border-foreground/10"
+                    }`}
+                    style={{
+                      opacity: isVisible ? 1 : 0,
+                      transform: isVisible ? "translateY(0)" : "translateY(20px)",
+                      transition: `all 0.5s ease ${0.6 + i * 0.1}s`,
+                    }}
+                    onMouseEnter={() => setHoveredMilestone(i)}
+                    onMouseLeave={() => setHoveredMilestone(null)}
+                  >
+                    {/* Year badge */}
                     <div
-                      className="text-xs text-foreground/40"
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
-                    >
-                      {era.period}
-                    </div>
-                  </div>
-
-                  {/* Bar Visualization */}
-                  <div className="flex-1 flex items-end justify-center px-5 pb-4">
-                    <div className="w-full flex flex-col items-center">
-                      {/* Song count */}
-                      <div
-                        className={`text-4xl mb-3 transition-all duration-300 ${
-                          isHovered || isPeak ? "text-amber-500 scale-110" : "text-foreground/70"
-                        }`}
-                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                      >
-                        {era.songs}
-                      </div>
-
-                      {/* Bar */}
-                      <div
-                        className={`w-full max-w-[100px] rounded-t-lg transition-all duration-700 ${era.color} ${
-                          isHovered ? "ring-2 ring-amber-500/50" : ""
-                        }`}
-                        style={{
-                          height: isVisible ? `${barHeight}px` : "0px",
-                          minHeight: era.songs > 0 ? "20px" : "0",
-                          transitionDelay: `${0.3 + i * 0.1}s`,
-                        }}
-                      />
-
-                      {/* Label */}
-                      <div
-                        className="text-xs text-foreground/40 mt-2"
-                        style={{ fontFamily: "'Outfit', sans-serif" }}
-                      >
-                        entries
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Stats Row */}
-                  <div className={`px-5 pb-5 pt-3 border-t transition-colors ${
-                    isHovered ? "border-amber-500/20" : "border-foreground/5"
-                  }`}>
-                    <div className="flex justify-between text-center">
-                      <div>
-                        <div
-                          className={`text-xl ${era.number_ones > 0 ? "text-amber-500" : "text-foreground/30"}`}
-                          style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                        >
-                          {era.number_ones}
-                        </div>
-                        <div className="text-[10px] text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                          #1s
-                        </div>
-                      </div>
-                      <div>
-                        <div
-                          className="text-xl text-foreground/70"
-                          style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                        >
-                          {era.top_tens}
-                        </div>
-                        <div className="text-[10px] text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                          Top 10
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Description on hover */}
-                    <div
-                      className={`mt-3 text-xs text-foreground/50 leading-relaxed transition-all duration-300 overflow-hidden ${
-                        isHovered ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
+                      className={`inline-block px-2 py-0.5 rounded text-xs mb-2 ${
+                        milestone.isHighlight ? "bg-amber-500/20 text-amber-500" : "bg-foreground/10 text-foreground/50"
                       }`}
                       style={{ fontFamily: "'Outfit', sans-serif" }}
                     >
-                      {era.description}
+                      {milestone.year}
+                    </div>
+
+                    {/* Title */}
+                    <div
+                      className={`text-lg mb-1 transition-colors ${
+                        isHovered || milestone.isHighlight ? "text-amber-500" : "text-foreground/80"
+                      }`}
+                      style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                    >
+                      {milestone.title}
+                    </div>
+
+                    {/* Subtitle */}
+                    <div
+                      className="text-xs text-foreground/50 mb-3 line-clamp-2"
+                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                    >
+                      {milestone.subtitle}
+                    </div>
+
+                    {/* Stat */}
+                    <div className="flex items-baseline gap-1">
+                      <span
+                        className={`text-2xl ${milestone.isHighlight ? "text-amber-500" : "text-foreground/70"}`}
+                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                      >
+                        {milestone.stat}
+                      </span>
+                      <span
+                        className="text-[10px] text-foreground/40"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}
+                      >
+                        {milestone.statLabel}
+                      </span>
                     </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
           </div>
 
-          {/* Bottom hint */}
-          <div className={`mt-8 text-center transition-all duration-700 delay-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
-            <p
-              className="text-sm text-foreground/40"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
-            >
-              Hover each era to explore
-            </p>
+          {/* Bottom summary */}
+          <div className={`mt-10 flex items-center justify-center gap-8 transition-all duration-700 delay-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+            <div className="text-center">
+              <div className="text-3xl text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                {years.length}
+              </div>
+              <div className="text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                Years
+              </div>
+            </div>
+            <div className="w-px h-8 bg-foreground/10" />
+            <div className="text-center">
+              <div className="text-3xl text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                {summary?.total_entries || 0}
+              </div>
+              <div className="text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                Entries
+              </div>
+            </div>
+            <div className="w-px h-8 bg-foreground/10" />
+            <div className="text-center">
+              <div className="text-3xl text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                {summary?.number_one_hits || 0}
+              </div>
+              <div className="text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                #1 Hits
+              </div>
+            </div>
+            <div className="w-px h-8 bg-foreground/10" />
+            <div className="text-center">
+              <div className="text-3xl text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                {summary?.total_weeks_on_chart?.toLocaleString() || 0}
+              </div>
+              <div className="text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                Total Weeks
+              </div>
+            </div>
           </div>
         </div>
       </div>

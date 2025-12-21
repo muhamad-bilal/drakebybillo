@@ -436,16 +436,6 @@ export function Section3Content({ isActive = false }: Section3ContentProps) {
             </div>
           </div>
 
-          {/* Bottom accent */}
-          <div className={`mt-6 flex items-center gap-6 transition-all duration-700 delay-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
-            <div className="h-[1px] flex-1 bg-gradient-to-r from-amber-500/30 to-transparent" />
-            <span className="text-xs tracking-[0.3em] text-foreground/30 uppercase" style={{ fontFamily: "'Outfit', sans-serif" }}>
-              Continue scrolling
-            </span>
-            <svg className="w-4 h-4 text-foreground/30 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </div>
         </div>
       </div>
     </section>

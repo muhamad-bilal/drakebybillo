@@ -25,6 +25,11 @@ export default function Home() {
   const touchStartX = useRef(0)
   const shaderContainerRef = useRef<HTMLDivElement>(null)
   const scrollThrottleRef = useRef<number>()
+  const isSnapping = useRef(false)
+  const scrollEndTimeout = useRef<NodeJS.Timeout>()
+  const lastScrollTime = useRef(0)
+  const scrollStartPosition = useRef(0)
+  const accumulatedDelta = useRef(0)
 
   useEffect(() => {
     const checkShaderReady = () => {
@@ -111,18 +116,86 @@ export default function Home() {
   }, [currentSection])
 
   useEffect(() => {
+    const snapToSection = (targetIdx: number) => {
+      if (!scrollContainerRef.current || isSnapping.current) return
+
+      isSnapping.current = true
+      const sectionWidth = scrollContainerRef.current.offsetWidth
+      scrollContainerRef.current.scrollTo({
+        left: targetIdx * sectionWidth,
+        behavior: "smooth",
+      })
+      setCurrentSection(targetIdx)
+
+      setTimeout(() => {
+        isSnapping.current = false
+      }, 500)
+    }
+
     const handleWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault()
 
-        if (!scrollContainerRef.current) return
+        if (!scrollContainerRef.current || isSnapping.current) return
+
+        const now = Date.now()
+        const sectionWidth = scrollContainerRef.current.offsetWidth
+
+        // Reset accumulated delta if this is a new scroll gesture (>200ms gap)
+        if (now - lastScrollTime.current > 200) {
+          accumulatedDelta.current = 0
+          scrollStartPosition.current = scrollContainerRef.current.scrollLeft
+        }
+
+        lastScrollTime.current = now
+        accumulatedDelta.current += e.deltaY
 
         scrollContainerRef.current.scrollBy({
           left: e.deltaY,
           behavior: "instant",
         })
 
-        const sectionWidth = scrollContainerRef.current.offsetWidth
+        // Clear existing timeout
+        if (scrollEndTimeout.current) {
+          clearTimeout(scrollEndTimeout.current)
+        }
+
+        // Set new timeout to detect scroll end and snap
+        scrollEndTimeout.current = setTimeout(() => {
+          if (!scrollContainerRef.current) return
+
+          const timeSinceLastScroll = Date.now() - lastScrollTime.current
+          if (timeSinceLastScroll >= 100) {
+            const container = scrollContainerRef.current
+            const currentScrollLeft = container.scrollLeft
+            const currentProgress = currentScrollLeft / sectionWidth
+
+            // Use accumulated delta to determine scroll direction and intent
+            const totalScrolled = accumulatedDelta.current
+            const threshold = sectionWidth * 0.3
+
+            // Only snap if user has scrolled significantly in one direction
+            if (Math.abs(totalScrolled) < threshold) {
+              // Not enough accumulated scroll - don't snap
+              accumulatedDelta.current = 0
+              return
+            }
+
+            // User scrolled enough - snap in the direction they were scrolling
+            let targetSection: number
+            if (totalScrolled > 0) {
+              // Scrolling forward - snap to next section
+              targetSection = Math.ceil(currentProgress)
+            } else {
+              // Scrolling backward - snap to previous section
+              targetSection = Math.floor(currentProgress)
+            }
+
+            snapToSection(Math.max(0, Math.min(11, targetSection)))
+            accumulatedDelta.current = 0
+          }
+        }, 100)
+
         const newSection = Math.round(scrollContainerRef.current.scrollLeft / sectionWidth)
         if (newSection !== currentSection) {
           setCurrentSection(newSection)
@@ -138,6 +211,9 @@ export default function Home() {
     return () => {
       if (container) {
         container.removeEventListener("wheel", handleWheel)
+      }
+      if (scrollEndTimeout.current) {
+        clearTimeout(scrollEndTimeout.current)
       }
     }
   }, [currentSection])
@@ -273,13 +349,20 @@ export default function Home() {
         {/* Hero Section */}
         <section className="flex min-h-screen w-screen shrink-0 flex-col justify-end px-6 pb-16 pt-24 md:px-12 md:pb-24">
           <div className="max-w-3xl">
-            
-            <h1 className="mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-6xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-7xl lg:text-8xl">
+
+            <h1
+              className="mb-6 animate-in fade-in slide-in-from-bottom-8 text-6xl leading-[0.9] tracking-tight text-foreground/90 duration-1000 md:text-7xl lg:text-8xl"
+              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            >
               <span className="text-balance">
-                Drake: By The Numbers
+                <span className="text-foreground/90">DRAKE:</span>{" "}
+                <span className="text-amber-500">BY THE NUMBERS</span>
               </span>
             </h1>
-            <p className="mb-8 max-w-xl animate-in fade-in slide-in-from-bottom-4 text-lg leading-relaxed text-foreground/90 duration-1000 delay-200 md:text-xl">
+            <p
+              className="mb-8 max-w-xl animate-in fade-in slide-in-from-bottom-4 text-lg leading-relaxed text-foreground/60 duration-1000 delay-200 md:text-xl"
+              style={{ fontFamily: "'Outfit', sans-serif" }}
+            >
               <span className="text-pretty">
                 A visual exploration of Billboard's most dominant artist
               </span>
@@ -300,8 +383,12 @@ export default function Home() {
 
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-in fade-in duration-1000 delay-500">
             <div className="flex items-center gap-2">
-              <p className="font-mono text-xs text-foreground/80">Scroll to explore</p>
-           
+              <p
+                className="text-xs tracking-[0.2em] text-foreground/50 uppercase"
+                style={{ fontFamily: "'Outfit', sans-serif" }}
+              >
+                Scroll to explore
+              </p>
             </div>
           </div>
         </section>
@@ -320,6 +407,7 @@ export default function Home() {
       </div>
 
       <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap');
         div::-webkit-scrollbar {
           display: none;
         }

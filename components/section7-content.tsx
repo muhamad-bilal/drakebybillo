@@ -598,16 +598,6 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
             </div>
           </div>
 
-          {/* Bottom accent */}
-          <div className={`absolute bottom-8 left-8 right-8 flex items-center gap-6 transition-all duration-700 delay-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
-            <div className="h-[1px] flex-1 bg-gradient-to-r from-amber-500/20 to-transparent" />
-            <span className="text-[10px] tracking-[0.3em] text-foreground/25 uppercase" style={{ fontFamily: "'Outfit', sans-serif" }}>
-              Continue scrolling
-            </span>
-            <svg className="w-4 h-4 text-foreground/25 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </div>
         </div>
       </div>
     </section>
