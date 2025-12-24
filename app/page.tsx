@@ -3,6 +3,7 @@
 import { Shader, ChromaFlow, Swirl } from "shaders/react"
 import { CustomCursor } from "@/components/custom-cursor"
 import { GrainOverlay } from "@/components/grain-overlay"
+import { MobileBlocker } from "@/components/mobile-blocker"
 import { Section1Content } from "@/components/section1-content"
 import { Section2Content } from "@/components/section2-content"
 import { Section3Content } from "@/components/section3-content"
@@ -257,6 +258,7 @@ export default function Home() {
 
   return (
     <main className="relative h-screen w-full overflow-hidden bg-background">
+      <MobileBlocker />
       <CustomCursor />
       <GrainOverlay />
 

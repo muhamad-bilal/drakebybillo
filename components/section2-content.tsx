@@ -107,9 +107,9 @@ export function Section2Content({ isActive = false }: Section2ContentProps) {
     setIsVisible(true)
   }, [data, isActive])
 
-  // Bar height calculation
-  const getBarHeight = (value: number, max: number): number => {
-    return (value / max) * 180
+  // Bar height calculation - now returns percentage for responsive scaling
+  const getBarHeight = (value: number, max: number): string => {
+    return `${(value / max) * 100}%`
   }
 
   if (loading) {
@@ -141,59 +141,59 @@ export function Section2Content({ isActive = false }: Section2ContentProps) {
 
       {/* Main content */}
       <div className="relative z-10 w-full h-full flex flex-col justify-center">
-        <div className="max-w-7xl mx-auto px-6 py-12 w-full">
+        <div className="max-w-7xl mx-auto px-6 w-full" style={{ paddingTop: 'var(--section-py)', paddingBottom: 'var(--section-py)' }}>
 
           {/* Header Row - Title + Stats side by side */}
-          <div className={`flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`flex flex-col lg:flex-row lg:items-end lg:justify-between transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ gap: 'var(--section-gap)', marginBottom: 'var(--section-gap)' }}>
             {/* Title */}
             <div>
               <h1
-                className="text-4xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                className="leading-[0.9] tracking-tight"
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-title)' }}
               >
                 <span className="text-foreground/90">WHERE IT</span>
                 <br />
                 <span className="text-amber-500">BEGAN</span>
               </h1>
               <p
-                className="text-sm md:text-base text-foreground/50 mt-4 max-w-md leading-relaxed"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
+                className="text-foreground/50 max-w-md leading-relaxed"
+                style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)', marginTop: 'var(--section-gap)' }}
               >
-                2009-2011: The foundation years. Hover over each bar to explore the breakdown.
+                Before the records. Before the empire. This is where the legend started.
               </p>
             </div>
 
             {/* Stats row - compact */}
-            <div className="flex gap-3">
-              <div className="px-4 py-3 rounded-xl bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20">
-                <div className="text-[1.625rem] text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+            <div className="flex gap-2">
+              <div className="rounded-xl bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20" style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                   {songCount}
                 </div>
-                <div className="text-[10px] text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                   Entries
                 </div>
               </div>
-              <div className="px-4 py-3 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                <div className="text-[1.625rem] text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <div className="rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                   {numberOnes}
                 </div>
-                <div className="text-[10px] text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                   #1 Hit
                 </div>
               </div>
-              <div className="px-4 py-3 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                <div className="text-[1.625rem] text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <div className="rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                   {topTens}
                 </div>
-                <div className="text-[10px] text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                   Top 10
                 </div>
               </div>
-              <div className="px-4 py-3 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                <div className="text-[1.625rem] text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <div className="rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                   {totalWeeks}
                 </div>
-                <div className="text-[10px] text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                   Weeks
                 </div>
               </div>
@@ -202,34 +202,37 @@ export function Section2Content({ isActive = false }: Section2ContentProps) {
 
           {/* Main Chart Area with Hover Details */}
           <div className={`transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="p-6 rounded-3xl bg-foreground/[0.02] border border-foreground/5">
-              <div className="flex flex-col lg:flex-row gap-6">
+            <div className="rounded-3xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding-lg)' }}>
+              <div className="flex flex-col lg:flex-row" style={{ gap: 'var(--section-gap)' }}>
 
                 {/* Bar Chart */}
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-4">
+                  <div className="flex items-center gap-3 mb-3">
                     <div className="h-[1px] w-8 bg-amber-500/50" />
                     <span
-                      className="text-xs tracking-[0.2em] text-amber-500/70 uppercase"
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                      className="tracking-[0.2em] text-amber-500/70 uppercase"
+                      style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                     >
                       Year-Over-Year
                     </span>
                   </div>
 
                   {/* Stacked Bar Chart */}
-                  <div className="flex items-end justify-around gap-4 h-[220px] mb-4">
+                  <div className="flex items-end justify-around gap-4 mb-3">
                     {yearStats.map((stat, i) => {
                       const prevStat = i > 0 ? yearStats[i - 1] : null
                       const percentChange = prevStat && prevStat.total > 0
                         ? Math.round(((stat.total - prevStat.total) / prevStat.total) * 100)
                         : null
 
+                      // Calculate bar height as percentage of max
+                      const barHeightPercent = (stat.total / maxTotal) * 100
+
                       return (
                         <div key={stat.year} className="flex-1 flex items-end">
                           {/* Percentage increase indicator */}
                           {percentChange !== null && (
-                            <div className="flex flex-col items-center justify-center px-2 self-center">
+                            <div className="flex flex-col items-center justify-center px-2 self-end mb-8">
                               <div
                                 className="text-[1rem] text-amber-400"
                                 style={{ fontFamily: "'Bebas Neue', sans-serif" }}
@@ -255,28 +258,31 @@ export function Section2Content({ isActive = false }: Section2ContentProps) {
                               {stat.total}
                             </div>
 
-                            {/* Stacked bars */}
-                            <div
-                              className={`w-full max-w-[80px] flex flex-col-reverse year-bar rounded-t-lg overflow-hidden transition-all duration-300 ${
-                                hoveredYear === stat.year ? "ring-2 ring-amber-500/50" : ""
-                              }`}
-                              style={{ height: `${getBarHeight(stat.total, maxTotal)}px` }}
-                            >
-                              {/* Top 10 segment */}
+                            {/* Bar container with fixed height for percentage calculation */}
+                            <div className="w-full flex justify-center" style={{ height: 'var(--chart-height-sm)' }}>
+                              {/* Stacked bars - height is percentage of the container */}
                               <div
-                                className="w-full bg-amber-500"
-                                style={{ height: `${(stat.top10 / stat.total) * 100}%` }}
-                              />
-                              {/* Top 40 segment */}
-                              <div
-                                className="w-full bg-amber-500/50"
-                                style={{ height: `${(stat.top40 / stat.total) * 100}%` }}
-                              />
-                              {/* Below 40 segment */}
-                              <div
-                                className="w-full bg-foreground/20"
-                                style={{ height: `${(stat.below40 / stat.total) * 100}%` }}
-                              />
+                                className={`w-full max-w-[80px] flex flex-col-reverse year-bar rounded-t-lg overflow-hidden transition-all duration-300 self-end ${
+                                  hoveredYear === stat.year ? "ring-2 ring-amber-500/50" : ""
+                                }`}
+                                style={{ height: `${barHeightPercent}%`, minHeight: stat.total > 0 ? '20px' : '0px' }}
+                              >
+                                {/* Top 10 segment */}
+                                <div
+                                  className="w-full bg-amber-500"
+                                  style={{ height: `${stat.total > 0 ? (stat.top10 / stat.total) * 100 : 0}%` }}
+                                />
+                                {/* Top 40 segment */}
+                                <div
+                                  className="w-full bg-amber-500/50"
+                                  style={{ height: `${stat.total > 0 ? (stat.top40 / stat.total) * 100 : 0}%` }}
+                                />
+                                {/* Below 40 segment */}
+                                <div
+                                  className="w-full bg-foreground/20"
+                                  style={{ height: `${stat.total > 0 ? (stat.below40 / stat.total) * 100 : 0}%` }}
+                                />
+                              </div>
                             </div>
 
                             {/* Year label */}
@@ -312,53 +318,53 @@ export function Section2Content({ isActive = false }: Section2ContentProps) {
                 </div>
 
                 {/* Hover Detail Panel */}
-                <div className="lg:w-72 min-h-[280px]">
-                  <div className={`h-full p-5 rounded-2xl border transition-all duration-300 ${
+                <div className="lg:w-64">
+                  <div className={`h-full rounded-2xl border transition-all duration-300 ${
                     hoveredStats
                       ? "bg-gradient-to-br from-amber-500/10 to-transparent border-amber-500/30"
                       : "bg-foreground/[0.02] border-foreground/10"
-                  }`}>
+                  }`} style={{ padding: 'var(--card-padding)' }}>
                     {hoveredStats ? (
                       <>
                         {/* Year header */}
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center justify-between mb-3">
                           <div
-                            className="text-[2.5rem] text-foreground"
-                            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                            className="text-foreground"
+                            style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-subtitle)' }}
                           >
                             {hoveredStats.year}
                           </div>
                           <div
-                            className="px-3 py-1 rounded-full text-sm bg-amber-500 text-black"
-                            style={{ fontFamily: "'Outfit', sans-serif" }}
+                            className="px-2 py-1 rounded-full bg-amber-500 text-black"
+                            style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                           >
                             {hoveredStats.total} songs
                           </div>
                         </div>
 
                         {/* Mini stats */}
-                        <div className="grid grid-cols-3 gap-2 mb-4">
+                        <div className="grid grid-cols-3 gap-2 mb-3">
                           <div className="text-center p-2 rounded-lg bg-black/20">
-                            <div className="text-[1.375rem] text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                            <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                               {hoveredStats.top10}
                             </div>
-                            <div className="text-[10px] text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                            <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                               Top 10
                             </div>
                           </div>
                           <div className="text-center p-2 rounded-lg bg-black/20">
-                            <div className="text-[1.375rem] text-foreground/70" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                            <div className="text-foreground/70" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                               {hoveredStats.top40}
                             </div>
-                            <div className="text-[10px] text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                            <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                               Top 40
                             </div>
                           </div>
                           <div className="text-center p-2 rounded-lg bg-black/20">
-                            <div className="text-[1.375rem] text-foreground/70" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                            <div className="text-foreground/70" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                               {hoveredStats.totalWeeks}
                             </div>
-                            <div className="text-[10px] text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                            <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                               Weeks
                             </div>
                           </div>
@@ -366,21 +372,21 @@ export function Section2Content({ isActive = false }: Section2ContentProps) {
 
                         {/* Best song */}
                         {hoveredStats.bestSong && (
-                          <div className="p-3 rounded-lg bg-black/30">
-                            <div className="text-[10px] text-foreground/40 uppercase tracking-wider mb-2" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                          <div className="p-2 rounded-lg bg-black/30">
+                            <div className="text-foreground/40 uppercase tracking-wider mb-1" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                               Best Performing
                             </div>
                             <div className="flex items-center gap-2">
                               <div
-                                className={`w-8 h-8 rounded flex items-center justify-center text-sm ${
+                                className={`w-7 h-7 rounded flex items-center justify-center ${
                                   hoveredStats.bestSong.peak_pos === 1 ? "bg-amber-500 text-black" : "bg-amber-500/30 text-amber-500"
                                 }`}
-                                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-small)' }}
                               >
                                 #{hoveredStats.bestSong.peak_pos}
                               </div>
                               <div className="flex-1 min-w-0">
-                                <div className="text-sm text-foreground truncate" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                                <div className="text-foreground truncate" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                                   {hoveredStats.bestSong.title}
                                 </div>
                               </div>
@@ -391,11 +397,11 @@ export function Section2Content({ isActive = false }: Section2ContentProps) {
                     ) : (
                       <div className="h-full flex flex-col items-center justify-center text-center">
                         <div className="text-foreground/20 mb-2">
-                          <svg className="w-10 h-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-8 h-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                           </svg>
                         </div>
-                        <div className="text-sm text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                        <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                           Hover over a bar<br />to see details
                         </div>
                       </div>
@@ -407,36 +413,36 @@ export function Section2Content({ isActive = false }: Section2ContentProps) {
           </div>
 
           {/* The First #1 - Compact */}
-          <div className={`mt-6 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20">
-              <div className="flex flex-col md:flex-row items-center gap-6">
+          <div className={`transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ marginTop: 'var(--section-gap)' }}>
+            <div className="rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20" style={{ padding: 'var(--card-padding)' }}>
+              <div className="flex flex-col md:flex-row items-center" style={{ gap: 'var(--section-gap)' }}>
                 <div className="flex-1">
-                  <div className="text-[10px] text-amber-500/70 uppercase tracking-wider mb-1" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                  <div className="text-amber-500/70 uppercase tracking-wider mb-1" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                     The First #1
                   </div>
-                  <div className="text-[1.75rem] md:text-[2.25rem] text-foreground" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                  <div className="text-foreground" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-subtitle)' }}>
                     "What's My Name?"
                   </div>
-                  <div className="text-sm text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                  <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                     with Rihanna • November 2010
                   </div>
                 </div>
 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-4">
                   <div className="text-center">
-                    <div className="text-[2.5rem] text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                    <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-large)' }}>
                       #1
                     </div>
-                    <div className="text-[10px] text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                    <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                       Peak
                     </div>
                   </div>
-                  <div className="w-[1px] h-10 bg-foreground/10" />
+                  <div className="w-[1px] h-8 bg-foreground/10" />
                   <div className="text-center">
-                    <div className="text-[2.5rem] text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                    <div className="text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-large)' }}>
                       27
                     </div>
-                    <div className="text-[10px] text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                    <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                       Weeks
                     </div>
                   </div>

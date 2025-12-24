@@ -59,7 +59,7 @@ export function Section75Content({ isActive = false }: Section75ContentProps) {
   }
 
   return (
-    <section className="relative flex h-screen w-screen shrink-0 overflow-hidden">
+    <section className="relative flex h-screen w-screen shrink-0 overflow-hidden" style={{ paddingTop: 'var(--section-py)', paddingBottom: 'var(--section-py)' }}>
       {/* Custom styles */}
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap');
@@ -69,36 +69,50 @@ export function Section75Content({ isActive = false }: Section75ContentProps) {
 
       {/* Main content */}
       <div className="relative z-10 w-full h-full flex items-center justify-center">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto text-center" style={{ padding: 'var(--card-padding)' }}>
 
           {/* Main Card */}
-          <div className={`p-12 md:p-16 rounded-3xl bg-gradient-to-b from-amber-500/10 to-transparent border border-amber-500/20 transition-all duration-1000 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+          <div
+            className={`rounded-3xl bg-gradient-to-b from-amber-500/10 to-transparent border border-amber-500/20 transition-all duration-1000 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+            style={{ padding: 'var(--card-padding-lg)' }}
+          >
 
             {/* Title */}
             <h2
-              className={`text-4xl md:text-5xl lg:text-6xl text-foreground mb-8 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              className={`text-foreground transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+              style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 'var(--text-title)',
+                marginBottom: 'var(--section-gap)'
+              }}
             >
               The Numbers Don't Lie
             </h2>
 
             {/* Stats Line */}
             <p
-              className={`text-lg md:text-xl text-foreground/70 leading-relaxed mb-6 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-              style={{ fontFamily: "'Outfit', sans-serif" }}
+              className={`text-foreground/70 leading-relaxed transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: 'var(--text-body)',
+                marginBottom: 'var(--section-gap)'
+              }}
             >
-              <span className="text-amber-500 font-semibold text-[1.375rem]">{totalEntries}</span> songs.{" "}
-              <span className="text-amber-500 font-semibold text-[1.375rem]">{numberOneHits}</span> #1 hits.{" "}
-              <span className="text-amber-500 font-semibold text-[1.375rem]">{topTenHits}</span> top 10s.
+              <span className="text-amber-500 font-semibold" style={{ fontSize: 'var(--text-stat-medium)' }}>{totalEntries}</span> songs.{" "}
+              <span className="text-amber-500 font-semibold" style={{ fontSize: 'var(--text-stat-medium)' }}>{numberOneHits}</span> #1 hits.{" "}
+              <span className="text-amber-500 font-semibold" style={{ fontSize: 'var(--text-stat-medium)' }}>{topTenHits}</span> top 10s.
               <br />
-              <span className="text-amber-500 font-semibold text-[1.375rem]">{totalWeeks.toLocaleString()}</span> weeks on the chart.{" "}
-              Over <span className="text-amber-500 font-semibold text-[1.375rem]">{yearsActive}</span> years of dominance.
+              <span className="text-amber-500 font-semibold" style={{ fontSize: 'var(--text-stat-medium)' }}>{totalWeeks.toLocaleString()}</span> weeks on the chart.{" "}
+              Over <span className="text-amber-500 font-semibold" style={{ fontSize: 'var(--text-stat-medium)' }}>{yearsActive}</span> years of dominance.
             </p>
 
             {/* Closing Statement */}
             <p
-              className={`text-2xl md:text-3xl transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-              style={{ fontFamily: "'Outfit', sans-serif" }}
+              className={`transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: 'var(--text-stat-medium)'
+              }}
             >
               <span className="text-amber-500 font-semibold">Drake isn't just an artist — he's the standard.</span>
             </p>

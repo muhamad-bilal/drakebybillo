@@ -119,72 +119,72 @@ export function Section6Content({ isActive = false }: Section6ContentProps) {
       
       {/* Main content */}
       <div className="relative z-10 w-full h-full flex flex-col justify-center">
-        <div className="max-w-7xl mx-auto px-6 py-8 w-full">
+        <div className="w-full px-8 lg:px-16" style={{ paddingTop: 'var(--section-py)', paddingBottom: 'var(--section-py)' }}>
 
           {/* Header Row */}
-          <div className={`flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-5 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`flex flex-col lg:flex-row lg:items-end lg:justify-between transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ gap: 'var(--section-gap)', marginBottom: 'var(--section-gap)' }}>
             {/* Title */}
             <div>
               <h1
-                className="text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                className="leading-[0.9] tracking-tight"
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-title)' }}
               >
                 <span className="text-foreground/90">STAYING</span>{" "}
                 <span className="text-amber-500">POWER</span>
               </h1>
               <p
-                className="text-base text-foreground/50 mt-2 max-w-md leading-relaxed"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
+                className="text-foreground/50 max-w-md leading-relaxed"
+                style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-body)', marginTop: 'calc(var(--section-gap) / 3)' }}
               >
                 Drake's songs don't just debut — they live on the chart for months.
               </p>
             </div>
 
             {/* Stats */}
-            <div className="flex gap-3">
-              <div className="px-4 py-3 rounded-xl bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20">
-                <div className="text-[1.625rem] text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{longestSong?.weeks || 0}</div>
-                <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>Longest Run</div>
+            <div className="flex" style={{ gap: 'calc(var(--section-gap) / 2)' }}>
+              <div className="rounded-xl bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20" style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>{longestSong?.weeks || 0}</div>
+                <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>Longest Run</div>
               </div>
-              <div className="px-4 py-3 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                <div className="text-[1.625rem] text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{totalSongs}</div>
-                <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>Total Songs</div>
+              <div className="rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>{totalSongs}</div>
+                <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>Total Songs</div>
               </div>
-              <div className="px-4 py-3 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                <div className="text-[1.625rem] text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <div className="rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                   {orderedDistribution[2].value + orderedDistribution[3].value + orderedDistribution[4].value}
                 </div>
-                <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>11+ Weeks</div>
+                <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>11+ Weeks</div>
               </div>
-              <div className="px-4 py-3 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                <div className="text-[1.625rem] text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <div className="rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                   {longestSongs.filter(s => s.weeks >= 36).length}
                 </div>
-                <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>9+ Months</div>
+                <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>9+ Months</div>
               </div>
             </div>
           </div>
 
           {/* Main Content - Chart + Details */}
           <div className={`transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="p-6 rounded-3xl">
-              <div className="flex flex-col lg:flex-row gap-6">
+            <div className="rounded-3xl" style={{ padding: 'var(--card-padding)' }}>
+              <div className="flex flex-col lg:flex-row" style={{ gap: 'var(--section-gap)' }}>
 
                 {/* Bar Chart */}
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center" style={{ gap: 'calc(var(--section-gap) / 3)', marginBottom: 'var(--section-gap)' }}>
                     <div className="h-[1px] w-8 bg-amber-500/50" />
                     <span
-                      className="text-xs tracking-[0.2em] text-amber-500/70 uppercase"
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                      className="tracking-[0.2em] text-amber-500/70 uppercase"
+                      style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                     >
                       Chart Duration Distribution
                     </span>
                   </div>
 
-                  <div className="rounded-xl p-4">
+                  <div className="rounded-xl" style={{ padding: 'var(--card-padding)' }}>
                     {/* Bar chart */}
-                    <div className="flex items-end justify-around gap-3 h-[220px] mb-4">
+                    <div className="flex items-end justify-around" style={{ gap: 'calc(var(--section-gap) / 2)', height: 'var(--chart-height-sm)', marginBottom: 'var(--section-gap)' }}>
                       {orderedDistribution.map((item, i) => {
                         const barHeight = maxDistribution > 0 ? (item.value / maxDistribution) * 180 : 0
                         const isHovered = hoveredBar === item.label
@@ -192,16 +192,17 @@ export function Section6Content({ isActive = false }: Section6ContentProps) {
                         return (
                           <div
                             key={item.label}
-                            className="flex-1 flex flex-col items-center gap-2 h-full justify-end cursor-pointer"
+                            className="flex-1 flex flex-col items-center h-full justify-end cursor-pointer"
+                            style={{ gap: 'calc(var(--section-gap) / 3)' }}
                             onMouseEnter={() => setHoveredBar(item.label)}
                             onMouseLeave={() => setHoveredBar(null)}
                           >
                             {/* Value label */}
                             <div
-                              className={`text-[1.75rem] transition-all ${
+                              className={`transition-all ${
                                 isHovered ? "text-amber-500 scale-110" : "text-foreground/70"
                               }`}
-                              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}
                             >
                               {item.value}
                             </div>
@@ -223,10 +224,10 @@ export function Section6Content({ isActive = false }: Section6ContentProps) {
 
                             {/* Label */}
                             <div
-                              className={`text-sm text-center transition-all ${
+                              className={`text-center transition-all ${
                                 isHovered ? "text-foreground" : "text-foreground/50"
                               }`}
-                              style={{ fontFamily: "'Outfit', sans-serif" }}
+                              style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                             >
                               {item.label.replace(" weeks", "w")}
                             </div>
@@ -236,11 +237,11 @@ export function Section6Content({ isActive = false }: Section6ContentProps) {
                     </div>
 
                     {/* Insight bar */}
-                    <div className="flex items-center gap-4 p-4 mt-6 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                      <div className="text-[2.5rem] text-amber-500 font-bold" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                    <div className="flex items-center rounded-lg bg-amber-500/10 border border-amber-500/20" style={{ gap: 'var(--section-gap)', padding: 'var(--card-padding)', marginTop: 'var(--section-gap)' }}>
+                      <div className="text-amber-500 font-bold" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-large)' }}>
                         {Math.round(((orderedDistribution[2].value + orderedDistribution[3].value + orderedDistribution[4].value) / totalSongs) * 100)}%
                       </div>
-                      <div className="text-sm text-foreground/70" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                      <div className="text-foreground/70" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                         of songs charted for 11+ weeks
                       </div>
                     </div>
@@ -248,47 +249,48 @@ export function Section6Content({ isActive = false }: Section6ContentProps) {
                 </div>
 
                 {/* Details Panel */}
-                <div className="lg:w-80">
-                  <div className="flex items-center gap-2 mb-3">
+                <div className="lg:w-96">
+                  <div className="flex items-center" style={{ gap: 'calc(var(--section-gap) / 3)', marginBottom: 'calc(var(--section-gap) / 2)' }}>
                     <div className="h-[1px] w-8 bg-amber-500/50" />
                     <span
-                      className="text-xs tracking-[0.2em] text-amber-500/70 uppercase"
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                      className="tracking-[0.2em] text-amber-500/70 uppercase"
+                      style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                     >
                       {hoveredBar ? hoveredBar : "Longest Runs"}
                     </span>
                   </div>
 
-                  <div className={`h-[300px] rounded-xl border transition-all duration-300 overflow-hidden ${
+                  <div className={`rounded-xl border transition-all duration-300 overflow-hidden ${
                     hoveredRangeSongs
                       ? "bg-gradient-to-br from-amber-500/10 to-transparent border-amber-500/30"
                       : "bg-foreground/[0.02] border-foreground/10"
-                  }`}>
+                  }`} style={{ height: 'var(--chart-height-md)' }}>
                     {hoveredRangeSongs && hoveredRangeSongs.length > 0 ? (
-                      <div className="p-4 h-full flex flex-col">
-                        <div className="text-sm text-foreground/50 mb-3" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                      <div className="h-full flex flex-col" style={{ padding: 'var(--card-padding)' }}>
+                        <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)', marginBottom: 'calc(var(--section-gap) / 2)' }}>
                           {orderedDistribution.find(d => d.label === hoveredBar)?.value} songs in this range
                         </div>
 
-                        <div className="flex-1 overflow-y-auto space-y-2 pr-1">
+                        <div className="flex-1 overflow-y-auto pr-1" style={{ display: 'flex', flexDirection: 'column', gap: 'calc(var(--section-gap) / 3)' }}>
                           {hoveredRangeSongs.map((song, i) => (
                             <div
                               key={song.title}
-                              className="flex items-center gap-3 p-3 rounded-lg bg-black/30"
+                              className="flex items-center rounded-lg bg-black/30"
+                              style={{ gap: 'calc(var(--section-gap) / 2)', padding: 'calc(var(--card-padding) * 0.75)' }}
                             >
                               <div
-                                className={`w-10 h-10 rounded-lg flex items-center justify-center text-base font-bold ${
+                                className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold ${
                                   song.peak <= 5 ? "bg-amber-500/30 text-amber-500" : "bg-foreground/10 text-foreground/50"
                                 }`}
-                                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-body)' }}
                               >
                                 #{song.peak}
                               </div>
                               <div className="flex-1 min-w-0">
-                                <div className="text-sm text-foreground/90 truncate" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                                <div className="text-foreground/90 truncate" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                                   {song.title}
                                 </div>
-                                <div className="text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                                <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                                   {song.weeks} weeks ({weeksToMonths(song.weeks)})
                                 </div>
                               </div>
@@ -297,35 +299,36 @@ export function Section6Content({ isActive = false }: Section6ContentProps) {
                         </div>
                       </div>
                     ) : (
-                      <div className="p-4 h-full overflow-y-auto">
-                        <div className="space-y-2">
+                      <div className="h-full overflow-y-auto" style={{ padding: 'var(--card-padding)' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'calc(var(--section-gap) / 3)' }}>
                           {longestSongs.slice(0, 8).map((song, i) => (
                             <div
                               key={song.title}
-                              className="flex items-center gap-3 p-3 rounded-lg bg-black/20"
+                              className="flex items-center rounded-lg bg-black/20"
+                              style={{ gap: 'calc(var(--section-gap) / 2)', padding: 'calc(var(--card-padding) * 0.75)' }}
                             >
                               <div
-                                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                                className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
                                   i < 3 ? "bg-amber-500/30 text-amber-500" : "bg-foreground/10 text-foreground/50"
                                 }`}
-                                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-small)' }}
                               >
                                 {i + 1}
                               </div>
                               <div className="flex-1 min-w-0">
-                                <div className="text-sm text-foreground/80 truncate" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                                <div className="text-foreground/80 truncate" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                                   {song.title}
                                 </div>
                               </div>
                               <div className="text-right">
-                                <div className={`text-base ${i === 0 ? "text-amber-500" : "text-foreground/70"}`} style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                <div className={`${i === 0 ? "text-amber-500" : "text-foreground/70"}`} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-body)' }}>
                                   {song.weeks}w
                                 </div>
                               </div>
                             </div>
                           ))}
                         </div>
-                        <div className="mt-4 text-center text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                        <div className="text-center text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)', marginTop: 'var(--section-gap)' }}>
                           Hover bars to filter songs
                         </div>
                       </div>

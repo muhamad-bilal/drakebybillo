@@ -196,80 +196,210 @@ export function Section5Content({ isActive = false }: Section5ContentProps) {
       <div className="relative z-10 w-full h-full flex">
 
         {/* Left Side - Title, Stats, Details */}
-        <div className="w-1/2 h-full flex flex-col justify-center px-8 lg:px-12 py-8">
+        <div
+          className="w-1/2 h-full flex flex-col justify-center"
+          style={{
+            paddingLeft: 'var(--card-padding-lg)',
+            paddingRight: 'var(--card-padding-lg)',
+            paddingTop: 'var(--section-py)',
+            paddingBottom: 'var(--section-py)'
+          }}
+        >
 
           {/* Title */}
-          <div className={`mb-8 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div
+            className={`transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            style={{ marginBottom: 'var(--section-gap)' }}
+          >
             <h1
-              className="text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight"
-              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              className="leading-[0.9] tracking-tight"
+              style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 'var(--text-title)'
+              }}
             >
               <span className="text-foreground/90">THE</span>{" "}
               <span className="text-amber-500">NETWORK</span>
             </h1>
             <p
-              className="text-base text-foreground/50 mt-3 max-w-md leading-relaxed"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
+              className="text-foreground/50 max-w-md leading-relaxed"
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: 'var(--text-body)',
+                marginTop: 'calc(var(--card-padding) / 2)'
+              }}
             >
               {uniqueCollaborators} artists. {totalCollabs} collaborative songs. Drake sits at the center.
             </p>
           </div>
 
           {/* Stats Row */}
-          <div className={`flex flex-wrap gap-3 mb-8 transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="px-5 py-4 rounded-xl bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20">
-              <div className="text-[2rem] text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{totalCollabs}</div>
-              <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>Collabs</div>
+          <div
+            className={`flex flex-wrap transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            style={{ gap: 'var(--card-padding)', marginBottom: 'var(--section-gap)' }}
+          >
+            <div
+              className="rounded-xl bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20"
+              style={{ padding: 'var(--card-padding)' }}
+            >
+              <div
+                className="text-amber-500"
+                style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 'var(--text-stat-large)'
+                }}
+              >
+                {totalCollabs}
+              </div>
+              <div
+                className="text-foreground/50"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-small)'
+                }}
+              >
+                Collabs
+              </div>
             </div>
-            <div className="px-5 py-4 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-              <div className="text-[2rem] text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{soloSongs}</div>
-              <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>Solo</div>
+            <div
+              className="rounded-xl bg-foreground/[0.02] border border-foreground/5"
+              style={{ padding: 'var(--card-padding)' }}
+            >
+              <div
+                className="text-foreground/90"
+                style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 'var(--text-stat-large)'
+                }}
+              >
+                {soloSongs}
+              </div>
+              <div
+                className="text-foreground/50"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-small)'
+                }}
+              >
+                Solo
+              </div>
             </div>
-            <div className="px-5 py-4 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-              <div className="text-[2rem] text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{uniqueCollaborators}</div>
-              <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>Artists</div>
+            <div
+              className="rounded-xl bg-foreground/[0.02] border border-foreground/5"
+              style={{ padding: 'var(--card-padding)' }}
+            >
+              <div
+                className="text-foreground/90"
+                style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 'var(--text-stat-large)'
+                }}
+              >
+                {uniqueCollaborators}
+              </div>
+              <div
+                className="text-foreground/50"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-small)'
+                }}
+              >
+                Artists
+              </div>
             </div>
-            <div className="px-5 py-4 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-              <div className="text-[2rem] text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{collabsWithNumberOne.length}</div>
-              <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>#1 Partners</div>
+            <div
+              className="rounded-xl bg-foreground/[0.02] border border-foreground/5"
+              style={{ padding: 'var(--card-padding)' }}
+            >
+              <div
+                className="text-foreground/90"
+                style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 'var(--text-stat-large)'
+                }}
+              >
+                {collabsWithNumberOne.length}
+              </div>
+              <div
+                className="text-foreground/50"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-small)'
+                }}
+              >
+                #1 Partners
+              </div>
             </div>
           </div>
 
           {/* Details Panel - Compact */}
-          <div className={`max-h-[240px] transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="flex items-center gap-2 mb-2">
+          <div
+            className={`transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            style={{ maxHeight: 'var(--chart-height-sm)' }}
+          >
+            <div
+              className="flex items-center"
+              style={{ gap: 'calc(var(--card-padding) / 3)', marginBottom: 'calc(var(--card-padding) / 3)' }}
+            >
               <div className="h-[1px] w-6 bg-amber-500/50" />
               <span
-                className="text-[10px] tracking-[0.2em] text-amber-500/70 uppercase"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
+                className="tracking-[0.2em] text-amber-500/70 uppercase"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-small)'
+                }}
               >
                 {activeCollab ? "Collaboration" : "Top Partners"}
               </span>
             </div>
 
-            <div className={`h-[200px] rounded-lg border transition-all duration-300 overflow-hidden ${
-              activeCollab
-                ? "bg-gradient-to-br from-amber-500/10 to-transparent border-amber-500/30"
-                : "bg-foreground/[0.02] border-foreground/10"
-            }`}>
+            <div
+              className={`rounded-lg border transition-all duration-300 overflow-hidden ${
+                activeCollab
+                  ? "bg-gradient-to-br from-amber-500/10 to-transparent border-amber-500/30"
+                  : "bg-foreground/[0.02] border-foreground/10"
+              }`}
+              style={{ height: 'calc(var(--chart-height-sm) - 2rem)' }}
+            >
               {activeCollab ? (
-                <div className="p-3 h-full flex flex-col">
-                  <div className="flex items-start justify-between mb-2">
+                <div
+                  className="h-full flex flex-col"
+                  style={{ padding: 'calc(var(--card-padding) / 2)' }}
+                >
+                  <div
+                    className="flex items-start justify-between"
+                    style={{ marginBottom: 'calc(var(--card-padding) / 3)' }}
+                  >
                     <div>
-                      <div className="text-lg text-foreground" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                      <div
+                        className="text-foreground"
+                        style={{
+                          fontFamily: "'Bebas Neue', sans-serif",
+                          fontSize: 'var(--text-stat-medium)'
+                        }}
+                      >
                         {activeCollab.collaborator}
                       </div>
-                      <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                      <div
+                        className="text-foreground/50"
+                        style={{
+                          fontFamily: "'Outfit', sans-serif",
+                          fontSize: 'var(--text-small)'
+                        }}
+                      >
                         {activeCollab.count} songs together
                       </div>
                     </div>
                     <div
-                      className={`px-2 py-1 rounded-md text-xs ${
+                      className={`px-2 py-1 rounded-md ${
                         activeCollab.best_peak === 1
                           ? "bg-amber-500 text-black"
                           : "bg-foreground/10 text-foreground/70"
                       }`}
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                      style={{
+                        fontFamily: "'Outfit', sans-serif",
+                        fontSize: 'var(--text-small)'
+                      }}
                     >
                       Best: #{activeCollab.best_peak}
                     </div>
@@ -281,26 +411,42 @@ export function Section5Content({ isActive = false }: Section5ContentProps) {
                       .map((song, i) => (
                         <div
                           key={`${song.title}-${i}`}
-                          className="flex items-center gap-2 p-2 rounded-md bg-black/30"
+                          className="flex items-center rounded-md bg-black/30"
+                          style={{ gap: 'calc(var(--card-padding) / 3)', padding: 'calc(var(--card-padding) / 3)' }}
                         >
                           <div
-                            className={`w-6 h-6 rounded flex items-center justify-center text-[10px] font-bold ${
+                            className={`w-6 h-6 rounded flex items-center justify-center font-bold ${
                               song.peak_pos === 1
                                 ? "bg-amber-500 text-black"
                                 : song.peak_pos <= 10
                                   ? "bg-amber-500/30 text-amber-500"
                                   : "bg-foreground/10 text-foreground/50"
                             }`}
-                            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                            style={{
+                              fontFamily: "'Bebas Neue', sans-serif",
+                              fontSize: 'var(--text-small)'
+                            }}
                           >
                             #{song.peak_pos}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="text-xs text-foreground/90 truncate" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                            <div
+                              className="text-foreground/90 truncate"
+                              style={{
+                                fontFamily: "'Outfit', sans-serif",
+                                fontSize: 'var(--text-small)'
+                              }}
+                            >
                               {song.title}
                             </div>
                           </div>
-                          <div className="text-[10px] text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                          <div
+                            className="text-foreground/40"
+                            style={{
+                              fontFamily: "'Outfit', sans-serif",
+                              fontSize: 'var(--text-small)'
+                            }}
+                          >
                             {song.weeks}w
                           </div>
                         </div>
@@ -308,7 +454,10 @@ export function Section5Content({ isActive = false }: Section5ContentProps) {
                   </div>
                 </div>
               ) : (
-                <div className="p-3 h-full flex flex-col">
+                <div
+                  className="h-full flex flex-col"
+                  style={{ padding: 'calc(var(--card-padding) / 2)' }}
+                >
                   {/* Horizontal Bar Chart */}
                   <div className="flex-1 flex flex-col justify-center space-y-1.5">
                     {(() => {
@@ -318,12 +467,16 @@ export function Section5Content({ isActive = false }: Section5ContentProps) {
                         return (
                           <div
                             key={collab.collaborator}
-                            className="flex items-center gap-2"
+                            className="flex items-center"
+                            style={{ gap: 'calc(var(--card-padding) / 3)' }}
                           >
                             {/* Name */}
                             <div
-                              className="w-16 text-[10px] truncate text-foreground/60"
-                              style={{ fontFamily: "'Outfit', sans-serif" }}
+                              className="w-16 truncate text-foreground/60"
+                              style={{
+                                fontFamily: "'Outfit', sans-serif",
+                                fontSize: 'var(--text-small)'
+                              }}
                               title={collab.collaborator}
                             >
                               {collab.collaborator.split(' ')[0]}
@@ -342,8 +495,11 @@ export function Section5Content({ isActive = false }: Section5ContentProps) {
 
                             {/* Count */}
                             <div
-                              className="w-5 text-[10px] text-right text-foreground/50"
-                              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                              className="w-5 text-right text-foreground/50"
+                              style={{
+                                fontFamily: "'Bebas Neue', sans-serif",
+                                fontSize: 'var(--text-small)'
+                              }}
                             >
                               {collab.count}
                             </div>
@@ -354,7 +510,14 @@ export function Section5Content({ isActive = false }: Section5ContentProps) {
                   </div>
 
                   {/* Footer hint */}
-                  <div className="mt-2 text-center text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                  <div
+                    className="text-center text-foreground/40"
+                    style={{
+                      fontFamily: "'Outfit', sans-serif",
+                      fontSize: 'var(--text-small)',
+                      marginTop: 'calc(var(--card-padding) / 3)'
+                    }}
+                  >
                     Hover network nodes for songs
                   </div>
                 </div>
@@ -363,30 +526,50 @@ export function Section5Content({ isActive = false }: Section5ContentProps) {
           </div>
 
           {/* Solo vs Collaborations Bar */}
-          <div className={`mt-10 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-foreground/60" style={{ fontFamily: "'Outfit', sans-serif" }}>
+          <div
+            className={`transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            style={{ marginTop: 'calc(var(--section-gap) * 1.5)' }}
+          >
+            <div
+              className="flex items-center justify-between"
+              style={{ marginBottom: 'calc(var(--card-padding) / 3)' }}
+            >
+              <span
+                className="text-foreground/60"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-body)'
+                }}
+              >
                 Solo vs. Collaborations
               </span>
-              <span className="text-sm text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <span
+                className="text-foreground/40"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-body)'
+                }}
+              >
                 {totalCollabs + soloSongs} total
               </span>
             </div>
             <div className="h-8 rounded-full overflow-hidden flex">
               <div
-                className="bg-amber-500 flex items-center justify-center text-black text-xs font-bold transition-all duration-1000"
+                className="bg-amber-500 flex items-center justify-center text-black font-bold transition-all duration-1000"
                 style={{
                   width: `${(totalCollabs / (totalCollabs + soloSongs)) * 100}%`,
-                  fontFamily: "'Outfit', sans-serif"
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-small)'
                 }}
               >
                 {Math.round((totalCollabs / (totalCollabs + soloSongs)) * 100)}% Collabs
               </div>
               <div
-                className="bg-foreground/20 flex items-center justify-center text-foreground/70 text-xs font-bold transition-all duration-1000"
+                className="bg-foreground/20 flex items-center justify-center text-foreground/70 font-bold transition-all duration-1000"
                 style={{
                   width: `${(soloSongs / (totalCollabs + soloSongs)) * 100}%`,
-                  fontFamily: "'Outfit', sans-serif"
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-small)'
                 }}
               >
                 {Math.round((soloSongs / (totalCollabs + soloSongs)) * 100)}% Solo
@@ -473,8 +656,12 @@ export function Section5Content({ isActive = false }: Section5ContentProps) {
                   >
                     {size > 36 && (
                       <span
-                        className="text-black text-[9px] font-bold text-center leading-tight px-1 truncate"
-                        style={{ fontFamily: "'Outfit', sans-serif", maxWidth: size - 8 }}
+                        className="text-black font-bold text-center leading-tight px-1 truncate"
+                        style={{
+                          fontFamily: "'Outfit', sans-serif",
+                          fontSize: 'var(--text-small)',
+                          maxWidth: size - 8
+                        }}
                       >
                         {node.collaborator.collaborator.split(" ")[0]}
                       </span>
@@ -485,26 +672,45 @@ export function Section5Content({ isActive = false }: Section5ContentProps) {
 
               {/* Legend */}
               <div
-                className="absolute bottom-6 left-6 text-sm text-foreground/50 space-y-2"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
+                className="absolute text-foreground/50 space-y-2"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-body)',
+                  bottom: 'var(--card-padding)',
+                  left: 'var(--card-padding)'
+                }}
               >
-                <div className="flex items-center gap-3">
+                <div
+                  className="flex items-center"
+                  style={{ gap: 'calc(var(--card-padding) / 2)' }}
+                >
                   <div className="w-4 h-4 rounded-full bg-amber-500" />
                   <span>#1 hit</span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div
+                  className="flex items-center"
+                  style={{ gap: 'calc(var(--card-padding) / 2)' }}
+                >
                   <div className="w-4 h-4 rounded-full bg-amber-500/60" />
                   <span>Top 10</span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div
+                  className="flex items-center"
+                  style={{ gap: 'calc(var(--card-padding) / 2)' }}
+                >
                   <div className="w-4 h-4 rounded-full bg-foreground/40" />
                   <span>Other</span>
                 </div>
               </div>
 
               <div
-                className="absolute bottom-6 right-6 text-sm text-foreground/40"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
+                className="absolute text-foreground/40"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'var(--text-body)',
+                  bottom: 'var(--card-padding)',
+                  right: 'var(--card-padding)'
+                }}
               >
                 Size = # songs
               </div>

@@ -211,26 +211,26 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
       `}</style>
 
       {/* Main content */}
-      <div className="relative z-10 w-full h-full flex items-center">
-        <div className="max-w-7xl mx-auto px-8 w-full">
+      <div className="relative z-10 w-full h-full flex items-center" style={{ paddingTop: 'var(--section-py)', paddingBottom: 'var(--section-py)' }}>
+        <div className="max-w-7xl mx-auto w-full" style={{ padding: 'var(--card-padding-lg)' }}>
 
-          <div className="flex gap-16 items-center">
+          <div className="flex items-center" style={{ gap: 'var(--section-gap)' }}>
 
             {/* Left Side - Donut Visualization */}
             <div className={`flex-1 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
 
               {/* Title above donut */}
-              <div className="mb-6">
+              <div style={{ marginBottom: 'var(--section-gap)' }}>
                 <h1
-                  className="text-5xl md:text-6xl leading-[0.9] tracking-tight"
-                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                  className="leading-[0.9] tracking-tight"
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-title)' }}
                 >
                   <span className="text-foreground/90">FLOODING</span>{" "}
                   <span className="text-amber-500">THE CHARTS</span>
                 </h1>
                 <p
-                  className="text-sm text-foreground/50 mt-2 max-w-sm leading-relaxed"
-                  style={{ fontFamily: "'Outfit', sans-serif" }}
+                  className="text-foreground/50 max-w-sm leading-relaxed"
+                  style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)', marginTop: '0.5rem' }}
                 >
                   When Drake drops an album, he doesn't just enter the Top 10 — he takes it over.
                 </p>
@@ -331,40 +331,40 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
                       style={{ animationDelay: "0.8s" }}
                     >
                       <div
-                        className="text-[5.5rem] text-amber-500 leading-none font-bold"
-                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                        className="text-amber-500 leading-none font-bold"
+                        style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-large)' }}
                       >
                         {currentMoment?.count}
                       </div>
                     </div>
                     <div
-                      className="text-lg text-foreground/40 -mt-1"
-                      style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 300 }}
+                      className="text-foreground/40 -mt-1"
+                      style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 300, fontSize: 'var(--text-body)' }}
                     >
                       of 10
                     </div>
 
                     {/* Hovered song or album name */}
-                    <div className="mt-3 px-4 text-center max-w-[160px]">
+                    <div className="mt-3 text-center max-w-[160px]" style={{ padding: 'var(--card-padding)' }}>
                       {hoveredSong ? (
                         <div className="transition-all duration-200">
                           <div
-                            className="text-sm text-amber-500 truncate"
-                            style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600 }}
+                            className="text-amber-500 truncate"
+                            style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: 'var(--text-small)' }}
                           >
                             {hoveredSong.title}
                           </div>
                           <div
-                            className="text-xs text-foreground/40 mt-0.5"
-                            style={{ fontFamily: "'Outfit', sans-serif" }}
+                            className="text-foreground/40 mt-0.5"
+                            style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                           >
                             Peak #{hoveredSong.peak_pos}
                           </div>
                         </div>
                       ) : (
                         <div
-                          className="text-sm text-foreground/30"
-                          style={{ fontFamily: "'Outfit', sans-serif" }}
+                          className="text-foreground/30"
+                          style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                         >
                           {currentMoment?.album}
                         </div>
@@ -372,20 +372,18 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
                     </div>
                   </div>
 
-                  {/* Record indicator */}
-                  {isRecord && (
-                    <div className="absolute -bottom-12 left-1/2 -translate-x-1/2">
-                      <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30">
-                        <span className="text-amber-500">★</span>
-                        <span
-                          className="text-xs text-amber-500/90 uppercase tracking-wider"
-                          style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500 }}
-                        >
-                          Billboard Record
-                        </span>
-                      </div>
+                  {/* Record indicator - always render but toggle visibility */}
+                  <div className={`absolute -bottom-12 left-1/2 -translate-x-1/2 transition-opacity duration-300 ${isRecord ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className="flex items-center rounded-full bg-amber-500/10 border border-amber-500/30" style={{ gap: '0.5rem', padding: 'var(--card-padding)' }}>
+                      <span className="text-amber-500">★</span>
+                      <span
+                        className="text-amber-500/90 uppercase tracking-wider"
+                        style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 'var(--text-small)' }}
+                      >
+                        Billboard Record
+                      </span>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -394,28 +392,28 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
             <div className={`w-[440px] transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
 
               {/* Stats Row */}
-              <div className="flex gap-3 mb-8">
-                <div className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/20">
-                  <div className="text-[1.75rem] text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>9</div>
-                  <div className="text-[10px] text-amber-500/70 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>Record</div>
+              <div className="flex" style={{ gap: '0.75rem', marginBottom: 'var(--section-gap)' }}>
+                <div className="flex-1 rounded-xl bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/20" style={{ padding: 'var(--card-padding)' }}>
+                  <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>9</div>
+                  <div className="text-amber-500/70 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>Record</div>
                 </div>
-                <div className="flex-1 px-4 py-3 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                  <div className="text-[1.75rem] text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{songCount}</div>
-                  <div className="text-[10px] text-foreground/40 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>Entries</div>
+                <div className="flex-1 rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+                  <div className="text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>{songCount}</div>
+                  <div className="text-foreground/40 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>Entries</div>
                 </div>
-                <div className="flex-1 px-4 py-3 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                  <div className="text-[1.75rem] text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{topTens}</div>
-                  <div className="text-[10px] text-foreground/40 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>Top 10s</div>
+                <div className="flex-1 rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+                  <div className="text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>{topTens}</div>
+                  <div className="text-foreground/40 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>Top 10s</div>
                 </div>
               </div>
 
               {/* Album Timeline */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-4">
+              <div style={{ marginBottom: 'var(--section-gap)' }}>
+                <div className="flex items-center" style={{ gap: '0.5rem', marginBottom: '1rem' }}>
                   <div className="h-[1px] w-6 bg-amber-500/40" />
                   <span
-                    className="text-[10px] tracking-[0.2em] text-amber-500/60 uppercase"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                    className="tracking-[0.2em] text-amber-500/60 uppercase"
+                    style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                   >
                     Album Drops
                   </span>
@@ -490,14 +488,14 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
                           {/* Label */}
                           <div className="mt-3 text-center">
                             <div
-                              className={`text-sm font-medium transition-colors ${isSelected ? "text-amber-500" : isPast ? "text-amber-500/60" : "text-foreground/40"}`}
-                              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                              className={`font-medium transition-colors ${isSelected ? "text-amber-500" : isPast ? "text-amber-500/60" : "text-foreground/40"}`}
+                              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-small)' }}
                             >
                               {moment.shortName}
                             </div>
                             <div
-                              className="text-[10px] text-foreground/30"
-                              style={{ fontFamily: "'Outfit', sans-serif" }}
+                              className="text-foreground/30"
+                              style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                             >
                               {moment.year}
                             </div>
@@ -511,26 +509,26 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
 
               {/* Song List */}
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between" style={{ marginBottom: '0.75rem' }}>
+                  <div className="flex items-center" style={{ gap: '0.5rem' }}>
                     <div className="h-[1px] w-6 bg-amber-500/40" />
                     <span
-                      className="text-[10px] tracking-[0.2em] text-amber-500/60 uppercase"
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                      className="tracking-[0.2em] text-amber-500/60 uppercase"
+                      style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                     >
                       Top 3 Songs
                     </span>
                   </div>
                   <span
-                    className="text-xs text-foreground/30"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                    className="text-foreground/30"
+                    style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                   >
                     {currentMoment?.songs.length} in Top 10
                   </span>
                 </div>
 
                 <div className="rounded-2xl bg-gradient-to-b from-foreground/[0.03] to-transparent border border-foreground/5 overflow-hidden">
-                  <div className="p-3 space-y-1.5">
+                  <div className="space-y-1.5" style={{ padding: 'var(--card-padding)' }}>
                     {currentMoment?.songs
                       .sort((a, b) => a.peak_pos - b.peak_pos)
                       .slice(0, 3)
@@ -540,16 +538,17 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
                         return (
                           <div
                             key={song.title}
-                            className="flex items-center gap-3 p-2.5 rounded-xl transition-all duration-200 bg-black/20 border border-transparent hover:bg-black/30"
+                            className="flex items-center rounded-xl transition-all duration-200 bg-black/20 border border-transparent hover:bg-black/30"
+                            style={{ gap: '0.75rem', padding: 'var(--card-padding)' }}
                           >
                             {/* Position badge */}
                             <div
-                              className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 ${
+                              className={`w-9 h-9 rounded-lg flex items-center justify-center font-bold shrink-0 ${
                                 isNumberOne
                                   ? "bg-amber-500 text-black"
                                   : "bg-foreground/5 text-foreground/40"
                               }`}
-                              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-small)' }}
                             >
                               #{song.peak_pos}
                             </div>
@@ -557,15 +556,15 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
                             {/* Song info */}
                             <div className="flex-1 min-w-0">
                               <div
-                                className="text-sm truncate text-foreground/70"
-                                style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500 }}
+                                className="truncate text-foreground/70"
+                                style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 'var(--text-small)' }}
                               >
                                 {song.title}
                               </div>
                               {song.collaborators.length > 0 && (
                                 <div
-                                  className="text-[11px] text-foreground/30 truncate"
-                                  style={{ fontFamily: "'Outfit', sans-serif" }}
+                                  className="text-foreground/30 truncate"
+                                  style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                                 >
                                   ft. {song.collaborators.slice(0, 2).join(", ")}
                                   {song.collaborators.length > 2 && ` +${song.collaborators.length - 2}`}
@@ -575,8 +574,8 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
 
                             {/* Weeks indicator */}
                             <div
-                              className="text-xs text-foreground/30 shrink-0"
-                              style={{ fontFamily: "'Outfit', sans-serif" }}
+                              className="text-foreground/30 shrink-0"
+                              style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                             >
                               {song.weeks_on_chart}w
                             </div>
@@ -587,14 +586,12 @@ export function Section7Content({ isActive = false }: Section7ContentProps) {
                 </div>
               </div>
 
-              {/* Record callout when CLB selected */}
-              {isRecord && (
-                <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20">
-                  <div className="text-sm text-foreground/60 leading-relaxed" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                    <span className="text-amber-500 font-medium">September 2021:</span> Drake became the first artist in Billboard history to debut 9 songs simultaneously in the Top 10.
-                  </div>
+              {/* Record callout - always render but toggle visibility to prevent layout shift */}
+              <div className={`mt-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 transition-opacity duration-300 ${isRecord ? 'opacity-100' : 'opacity-0'}`} style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-foreground/60 leading-relaxed" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
+                  <span className="text-amber-500 font-medium">September 2021:</span> Drake became the first artist in Billboard history to debut 9 songs simultaneously in the Top 10.
                 </div>
-              )}
+              </div>
             </div>
           </div>
 

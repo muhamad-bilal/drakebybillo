@@ -170,19 +170,22 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
         <div className="w-full max-w-7xl mx-auto px-8">
 
           {/* Title */}
-          <div className={`text-center mb-10 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div
+            className={`text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            style={{ marginBottom: 'var(--section-gap)' }}
+          >
             <h1
-              className="text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight"
-              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              className="leading-[0.9] tracking-tight"
+              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-title)' }}
             >
               <span className="text-foreground/90">THE</span>{" "}
               <span className="text-amber-500">JOURNEY</span>
             </h1>
             <p
-              className="text-base text-foreground/50 mt-3"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
+              className="text-foreground/50"
+              style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-body)', marginTop: 'calc(var(--section-gap) * 0.3)' }}
             >
-              {years[0]} to {years[years.length - 1]} — A decade of dominance
+              From 2009 to now. A visual timeline of how one artist rewrote Billboard history.
             </p>
           </div>
 
@@ -190,11 +193,14 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
           <div className={`relative transition-all duration-700 delay-200 ${isVisible ? "opacity-100" : "opacity-0"}`}>
 
             {/* Chart label */}
-            <div className="flex items-center justify-center gap-2 mb-4">
+            <div
+              className="flex items-center justify-center"
+              style={{ gap: 'calc(var(--section-gap) * 0.2)', marginBottom: 'calc(var(--section-gap) * 0.4)' }}
+            >
               <div className="h-[1px] w-8 bg-amber-500/30" />
               <span
-                className="text-xs tracking-[0.2em] text-amber-500/70 uppercase"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
+                className="tracking-[0.2em] text-amber-500/70 uppercase"
+                style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
               >
                 Chart Entries Per Year
               </span>
@@ -202,7 +208,10 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
             </div>
 
             {/* Year bars - Activity graph with labels */}
-            <div className="flex items-end justify-center gap-[3px] h-[140px] mb-2 px-4">
+            <div
+              className="flex items-end justify-center gap-[3px] px-4"
+              style={{ height: 'var(--chart-height-sm)', marginBottom: 'calc(var(--section-gap) * 0.2)' }}
+            >
               {timelineData.map((item, i) => {
                 const barHeight = (item.entries / maxEntries) * 110
                 const hasNumberOne = item.numberOnes > 0
@@ -222,8 +231,8 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
                     {/* Hover tooltip */}
                     {isHovered && (
                       <div
-                        className="text-xs text-amber-500 mb-1"
-                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                        className="text-amber-500"
+                        style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-small)', marginBottom: 'calc(var(--section-gap) * 0.1)' }}
                       >
                         {item.entries}
                       </div>
@@ -255,7 +264,10 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
             </div>
 
             {/* Year labels - aligned with bars */}
-            <div className="flex justify-center gap-[3px] px-4 mt-2">
+            <div
+              className="flex justify-center gap-[3px] px-4"
+              style={{ marginTop: 'calc(var(--section-gap) * 0.2)' }}
+            >
               {timelineData.map((item, i) => (
                 <div
                   key={item.year}
@@ -266,8 +278,8 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
                   }}
                 >
                   <span
-                    className={`text-xs ${hoveredBar === i ? "text-amber-500" : "text-foreground/40"}`}
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                    className={hoveredBar === i ? "text-amber-500" : "text-foreground/40"}
+                    style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                   >
                     '{item.year.slice(-2)}
                   </span>
@@ -276,30 +288,36 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
             </div>
 
             {/* Legend */}
-            <div className="flex items-center justify-center gap-6 mt-4 mb-6">
-              <div className="flex items-center gap-2">
+            <div
+              className="flex items-center justify-center"
+              style={{ gap: 'var(--section-gap)', marginTop: 'calc(var(--section-gap) * 0.4)', marginBottom: 'var(--section-gap)' }}
+            >
+              <div className="flex items-center" style={{ gap: 'calc(var(--section-gap) * 0.3)' }}>
                 <div className="w-3 h-3 rounded-sm bg-amber-500" />
-                <span className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                <span className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                   Year with #1 hit
                 </span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center" style={{ gap: 'calc(var(--section-gap) * 0.3)' }}>
                 <div className="w-3 h-3 rounded-sm bg-foreground/30" />
-                <span className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                <span className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                   No #1 hit
                 </span>
               </div>
             </div>
 
             {/* Milestone cards */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6">
+            <div
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6"
+              style={{ gap: 'calc(var(--section-gap) * 0.4)', marginTop: 'var(--section-gap)' }}
+            >
               {milestones.map((milestone, i) => {
                 const isHovered = hoveredMilestone === i
 
                 return (
                   <div
                     key={milestone.year}
-                    className={`p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                    className={`rounded-xl border transition-all duration-300 cursor-pointer ${
                       isHovered
                         ? "bg-gradient-to-b from-amber-500/20 to-transparent border-amber-500/50 scale-105"
                         : milestone.isHighlight
@@ -307,6 +325,7 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
                         : "bg-foreground/[0.03] border-foreground/10"
                     }`}
                     style={{
+                      padding: 'var(--card-padding)',
                       opacity: isVisible ? 1 : 0,
                       transform: isVisible ? "translateY(0)" : "translateY(20px)",
                       transition: `all 0.5s ease ${0.6 + i * 0.1}s`,
@@ -316,43 +335,43 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
                   >
                     {/* Year badge */}
                     <div
-                      className={`inline-block px-2 py-0.5 rounded text-xs mb-2 ${
+                      className={`inline-block px-2 py-0.5 rounded ${
                         milestone.isHighlight ? "bg-amber-500/20 text-amber-500" : "bg-foreground/10 text-foreground/50"
                       }`}
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                      style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)', marginBottom: 'calc(var(--section-gap) * 0.2)' }}
                     >
                       {milestone.year}
                     </div>
 
                     {/* Title */}
                     <div
-                      className={`text-lg mb-1 transition-colors ${
+                      className={`transition-colors ${
                         isHovered || milestone.isHighlight ? "text-amber-500" : "text-foreground/80"
                       }`}
-                      style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                      style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-body)', marginBottom: 'calc(var(--section-gap) * 0.1)' }}
                     >
                       {milestone.title}
                     </div>
 
                     {/* Subtitle */}
                     <div
-                      className="text-xs text-foreground/50 mb-3 line-clamp-2"
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                      className="text-foreground/50 line-clamp-2"
+                      style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)', marginBottom: 'calc(var(--section-gap) * 0.3)' }}
                     >
                       {milestone.subtitle}
                     </div>
 
                     {/* Stat */}
-                    <div className="flex items-baseline gap-1">
+                    <div className="flex items-baseline" style={{ gap: 'calc(var(--section-gap) * 0.1)' }}>
                       <span
-                        className={`text-2xl ${milestone.isHighlight ? "text-amber-500" : "text-foreground/70"}`}
-                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                        className={milestone.isHighlight ? "text-amber-500" : "text-foreground/70"}
+                        style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}
                       >
                         {milestone.stat}
                       </span>
                       <span
-                        className="text-[10px] text-foreground/40"
-                        style={{ fontFamily: "'Outfit', sans-serif" }}
+                        className="text-foreground/40"
+                        style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                       >
                         {milestone.statLabel}
                       </span>
@@ -364,39 +383,42 @@ export function Section8Content({ isActive = false }: Section8ContentProps) {
           </div>
 
           {/* Bottom summary */}
-          <div className={`mt-10 flex items-center justify-center gap-8 transition-all duration-700 delay-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+          <div
+            className={`flex items-center justify-center transition-all duration-700 delay-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}
+            style={{ marginTop: 'var(--section-gap)', gap: 'var(--section-gap)' }}
+          >
             <div className="text-center">
-              <div className="text-3xl text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                 {years.length}
               </div>
-              <div className="text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 Years
               </div>
             </div>
-            <div className="w-px h-8 bg-foreground/10" />
+            <div className="w-px h-10 bg-foreground/10" />
             <div className="text-center">
-              <div className="text-3xl text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <div className="text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                 {summary?.total_entries || 0}
               </div>
-              <div className="text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 Entries
               </div>
             </div>
-            <div className="w-px h-8 bg-foreground/10" />
+            <div className="w-px h-10 bg-foreground/10" />
             <div className="text-center">
-              <div className="text-3xl text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                 {summary?.number_one_hits || 0}
               </div>
-              <div className="text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 #1 Hits
               </div>
             </div>
-            <div className="w-px h-8 bg-foreground/10" />
+            <div className="w-px h-10 bg-foreground/10" />
             <div className="text-center">
-              <div className="text-3xl text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <div className="text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                 {summary?.total_weeks_on_chart?.toLocaleString() || 0}
               </div>
-              <div className="text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 Total Weeks
               </div>
             </div>

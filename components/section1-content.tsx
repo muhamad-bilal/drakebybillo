@@ -147,104 +147,104 @@ export function Section1Content({ isActive = false }: Section1ContentProps) {
       `}</style>
 
 
-      {/* Main content - scrollable within section */}
-      <div className="relative z-10 w-full h-full overflow-y-auto">
-        <div className="max-w-7xl mx-auto px-6 py-24 min-h-screen flex flex-col justify-center">
+      {/* Main content - responsive scaling */}
+      <div className="relative z-10 w-full h-full flex items-center">
+        <div className="max-w-7xl mx-auto px-6 w-full" style={{ paddingTop: 'var(--section-py)', paddingBottom: 'var(--section-py)' }}>
 
           {/* Main headline */}
-          <div className={`mb-12 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+          <div className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ marginBottom: 'var(--section-gap)' }}>
+            <h1 className="leading-[0.9] tracking-tight" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-hero)' }}>
               <span className="text-foreground/90">STARTED FROM</span>
               <br />
               <span className="text-amber-500">THE BOTTOM</span>
             </h1>
-            <p className="text-base md:text-lg text-foreground/50 mt-6 max-w-xl leading-relaxed" style={{ fontFamily: "'Outfit', sans-serif" }}>
+            <p className="text-foreground/50 max-w-xl leading-relaxed" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-body)', marginTop: 'var(--section-gap)' }}>
               From his first chart entry in 2009 to becoming the most decorated artist
               in Hot 100 history — this is the story told through data.
             </p>
           </div>
 
           {/* First entry highlight */}
-          <div className={`mb-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <div className="flex items-center gap-4 mb-4">
+          <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ marginBottom: 'var(--section-gap)' }}>
+            <div className="flex items-center gap-4 mb-2">
               <div className="h-[1px] w-12 bg-amber-500/50" />
-              <span className="text-xs tracking-[0.3em] text-amber-500/70 uppercase" style={{ fontFamily: "'Outfit', sans-serif" }}>First Chart Entry</span>
+              <span className="tracking-[0.3em] text-amber-500/70 uppercase" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>First Chart Entry</span>
             </div>
             <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
-              <span className="text-3xl md:text-4xl text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <span className="text-foreground/90" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-subtitle)' }}>
                 {formatDate(firstEntry.date)}
               </span>
             </div>
           </div>
 
           {/* Stats grid */}
-          <div className={`grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12 transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className={`grid grid-cols-2 lg:grid-cols-4 transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ gap: 'var(--section-gap)', marginBottom: 'var(--section-gap)' }}>
             {/* Total entries - highlighted as primary stat */}
-            <div className="rounded-2xl p-5 md:p-6 bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20">
-              <div className="text-[2.5rem] md:text-[3.25rem] lg:text-[4rem] text-amber-500 mb-2" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+            <div className="rounded-2xl bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20" style={{ padding: 'var(--card-padding)' }}>
+              <div className="text-amber-500 mb-1" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-large)' }}>
                 {counters.entries}
               </div>
-              <div className="text-xs md:text-sm text-foreground/50 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="text-foreground/50 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 Hot 100 Entries
               </div>
-              <div className="mt-2 text-xs text-amber-500/60" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="mt-1 text-amber-500/60" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 All-time record holder
               </div>
             </div>
 
             {/* Number ones */}
-            <div className="rounded-2xl p-5 md:p-6 bg-foreground/[0.02] border border-foreground/5">
-              <div className="text-[2.5rem] md:text-[3.25rem] lg:text-[4rem] text-foreground/90 mb-2" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+            <div className="rounded-2xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+              <div className="text-foreground/90 mb-1" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-large)' }}>
                 {counters.numberOnes}
               </div>
-              <div className="text-xs md:text-sm text-foreground/50 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="text-foreground/50 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 #1 Hits
               </div>
-              <div className="mt-2 text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="mt-1 text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 Tied with Michael Jackson
               </div>
             </div>
 
             {/* Top 10s - highlighted as record */}
-            <div className="rounded-2xl p-5 md:p-6 bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20">
-              <div className="text-[2.5rem] md:text-[3.25rem] lg:text-[4rem] text-amber-500 mb-2" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+            <div className="rounded-2xl bg-gradient-to-br from-amber-500/15 to-transparent border border-amber-500/20" style={{ padding: 'var(--card-padding)' }}>
+              <div className="text-amber-500 mb-1" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-large)' }}>
                 {counters.topTens}
               </div>
-              <div className="text-xs md:text-sm text-foreground/50 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="text-foreground/50 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 Top 10 Hits
               </div>
-              <div className="mt-2 text-xs text-amber-500/60" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="mt-1 text-amber-500/60" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 All-time record
               </div>
             </div>
 
             {/* Total weeks */}
-            <div className="rounded-2xl p-5 md:p-6 bg-foreground/[0.02] border border-foreground/5">
-              <div className="text-[2.5rem] md:text-[3.25rem] lg:text-[4rem] text-foreground/90 mb-2" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+            <div className="rounded-2xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+              <div className="text-foreground/90 mb-1" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-large)' }}>
                 {counters.totalWeeks.toLocaleString()}
               </div>
-              <div className="text-xs md:text-sm text-foreground/50 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="text-foreground/50 uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 Total Weeks
               </div>
-              <div className="mt-2 text-xs text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="mt-1 text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                 ~{Math.round(finalStats.totalWeeks / 52)} years of chart presence
               </div>
             </div>
           </div>
 
           {/* Additional stats row */}
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-              <div className="text-[1.625rem] text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{avgWeeks}</div>
-              <div className="text-sm text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>Avg. weeks per song</div>
+          <div className={`grid grid-cols-1 md:grid-cols-3 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ gap: 'var(--section-gap)' }}>
+            <div className="flex items-center gap-3 rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+              <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>{avgWeeks}</div>
+              <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>Avg. weeks per song</div>
             </div>
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-              <div className="text-[1.625rem] text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>#{Math.round(avgPeak)}</div>
-              <div className="text-sm text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>Avg. peak position</div>
+            <div className="flex items-center gap-3 rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+              <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>#{Math.round(avgPeak)}</div>
+              <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>Avg. peak position</div>
             </div>
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-              <div className="text-[1.625rem] text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{longestSong.weeks}w</div>
-              <div className="text-sm text-foreground/50 truncate" style={{ fontFamily: "'Outfit', sans-serif" }}>Longest charting: "{longestSong.title}"</div>
+            <div className="flex items-center gap-3 rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+              <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>{longestSong.weeks}w</div>
+              <div className="text-foreground/50 truncate" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>Longest charting: "{longestSong.title}"</div>
             </div>
           </div>
 

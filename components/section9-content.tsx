@@ -72,39 +72,39 @@ export function Section9Content({ isActive = false }: Section9ContentProps) {
         <div className="max-w-7xl mx-auto px-6 w-full">
 
           {/* Title - Centered */}
-          <div className={`text-center mb-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ marginBottom: 'var(--section-gap)' }}>
             <h1
-              className="text-4xl md:text-5xl lg:text-6xl leading-[0.9] tracking-tight"
-              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              className="leading-[0.9] tracking-tight"
+              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-title)' }}
             >
               <span className="text-foreground/90">EVERY</span>{" "}
               <span className="text-amber-500">STREAM</span>
             </h1>
             <p
-              className="text-base md:text-lg text-foreground/50 mt-3 max-w-xl mx-auto"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
+              className="text-foreground/50 max-w-xl mx-auto"
+              style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-body)', marginTop: 'var(--section-gap)' }}
             >
               Beyond the charts. Beyond the records. This is the sound of an entire generation pressing play.
             </p>
           </div>
 
           {/* Main Layout - Two columns */}
-          <div className={`flex flex-col lg:flex-row gap-5 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`flex flex-col lg:flex-row transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ gap: 'var(--section-gap)' }}>
 
             {/* Left Column - Counter + Scale */}
             <div className="flex-1">
               {/* Big Counter */}
-              <div className="p-5 rounded-xl bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/30 mb-4">
+              <div className="rounded-xl bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/30" style={{ padding: 'var(--card-padding)', marginBottom: 'var(--section-gap)' }}>
                 <div className="text-center">
                   <div
-                    className="text-[10px] tracking-[0.3em] text-amber-500/70 uppercase mb-1"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                    className="tracking-[0.3em] text-amber-500/70 uppercase"
+                    style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)', marginBottom: 'var(--section-gap)' }}
                   >
                     Total Spotify Streams
                   </div>
                   <div
-                    className="text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] text-amber-500 leading-none"
-                    style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                    className="text-amber-500 leading-none"
+                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-large)' }}
                   >
                     {formatNumber(countedStreams)}
                   </div>
@@ -112,21 +112,21 @@ export function Section9Content({ isActive = false }: Section9ContentProps) {
               </div>
 
               {/* Scale Visualization */}
-              <div className="p-4 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                <div className="text-sm text-center text-foreground/50 mb-3" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <div className="rounded-xl bg-foreground/[0.02] border border-foreground/5" style={{ padding: 'var(--card-padding)' }}>
+                <div className="text-center text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)', marginBottom: 'var(--section-gap)' }}>
                   If each stream was 1 second of music...
                 </div>
 
                 {/* Years bar */}
-                <div className="relative h-10 bg-black/20 rounded-lg overflow-hidden mb-3">
+                <div className="relative bg-black/20 rounded-lg overflow-hidden" style={{ height: 'var(--chart-height-sm)', marginBottom: 'var(--section-gap)' }}>
                   <div
                     className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-500 to-amber-400 rounded-lg transition-all duration-1500 ease-out"
                     style={{ width: isVisible ? "100%" : "0%" }}
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span
-                      className="text-lg text-black font-bold"
-                      style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                      className="text-black font-bold"
+                      style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-body)' }}
                     >
                       3,966 YEARS OF MUSIC
                     </span>
@@ -134,7 +134,7 @@ export function Section9Content({ isActive = false }: Section9ContentProps) {
                 </div>
 
                 {/* Time breakdown */}
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-4" style={{ gap: 'var(--section-gap)' }}>
                   {[
                     { value: "3,966", label: "Years" },
                     { value: "47,592", label: "Months" },
@@ -143,23 +143,24 @@ export function Section9Content({ isActive = false }: Section9ContentProps) {
                   ].map((item, i) => (
                     <div
                       key={item.label}
-                      className="p-2 rounded-lg bg-black/20 text-center"
+                      className="rounded-lg bg-black/20 text-center"
                       style={{
+                        padding: 'var(--card-padding)',
                         opacity: isVisible ? 1 : 0,
                         transition: `opacity 0.5s ease ${0.5 + i * 0.1}s`,
                       }}
                     >
-                      <div className="text-xl text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                      <div className="text-amber-500" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                         {item.value}
                       </div>
-                      <div className="text-xs text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                      <div className="text-foreground/50" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
                         {item.label}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-3 text-center text-sm text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                <div className="text-center text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)', marginTop: 'var(--section-gap)' }}>
                   Longer than the Roman Empire lasted
                 </div>
               </div>
@@ -167,18 +168,18 @@ export function Section9Content({ isActive = false }: Section9ContentProps) {
 
             {/* Right Column - Emotional Quote */}
             <div className="lg:w-[420px]">
-              <div className="h-full p-6 rounded-xl bg-gradient-to-b from-amber-500/10 to-transparent border border-amber-500/20 flex flex-col justify-center">
+              <div className="h-full rounded-xl bg-gradient-to-b from-amber-500/10 to-transparent border border-amber-500/20 flex flex-col justify-center" style={{ padding: 'var(--card-padding-lg)' }}>
                 <h3
-                  className="text-2xl md:text-3xl text-foreground mb-3 leading-tight"
-                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                  className="text-foreground leading-tight"
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-title)', marginBottom: 'var(--section-gap)' }}
                 >
                   They're not just listening.
                   <br />
                   <span className="text-amber-500">They're living with it.</span>
                 </h3>
                 <p
-                  className="text-sm text-foreground/60 leading-relaxed"
-                  style={{ fontFamily: "'Outfit', sans-serif" }}
+                  className="text-foreground/60 leading-relaxed"
+                  style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}
                 >
                   125 billion streams isn't just number — it's a generation's soundtrack.
                   Morning commutes, late night drives, heartbreaks, celebrations.

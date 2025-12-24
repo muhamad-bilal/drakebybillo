@@ -1,13 +1,32 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null)
   const positionRef = useRef({ x: 0, y: 0 })
   const targetPositionRef = useRef({ x: 0, y: 0 })
+  const [isMobile, setIsMobile] = useState(true) // Default to true to prevent flash
 
   useEffect(() => {
+    // Check if device is mobile/tablet
+    const checkDevice = () => {
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+      const isSmallScreen = window.innerWidth < 1024
+      const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
+      setIsMobile((isTouchDevice && isSmallScreen) || isMobileUA || isSmallScreen)
+    }
+
+    checkDevice()
+    window.addEventListener("resize", checkDevice)
+
+    return () => window.removeEventListener("resize", checkDevice)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) return // Don't run animation on mobile
+
     let animationFrameId: number
 
     const lerp = (start: number, end: number, factor: number) => {
@@ -36,7 +55,10 @@ export function CustomCursor() {
       window.removeEventListener("mousemove", handleMouseMove)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [])
+  }, [isMobile])
+
+  // Don't render cursor on mobile/tablet
+  if (isMobile) return null
 
   return (
     <div

@@ -125,6 +125,44 @@
     @apply bg-background text-foreground;
   }
 
+  /* Responsive scaling based on viewport height */
+  :root {
+    /* Scale factor: 1 at 900px height, scales down for smaller screens */
+    --vh-scale: clamp(0.75, calc(100vh / 900), 1);
+
+    /* Responsive spacing */
+    --section-py: clamp(1rem, 3vh, 2.5rem);
+    --section-gap: clamp(0.5rem, 1.5vh, 1.25rem);
+
+    /* Responsive font sizes - scales with viewport, higher minimums for readability */
+    --text-hero: clamp(3rem, 8vh, 6rem);
+    --text-title: clamp(2.5rem, 6vh, 4.5rem);
+    --text-subtitle: clamp(1.75rem, 4vh, 3rem);
+    --text-stat-large: clamp(2.5rem, 5vh, 4rem);
+    --text-stat-medium: clamp(1.5rem, 3vh, 2rem);
+    --text-body: clamp(0.875rem, 1.8vh, 1.125rem);
+    --text-small: clamp(0.75rem, 1.4vh, 0.875rem);
+
+    /* Responsive chart heights */
+    --chart-height-sm: clamp(120px, 22vh, 200px);
+    --chart-height-md: clamp(180px, 32vh, 320px);
+    --chart-height-lg: clamp(240px, 42vh, 440px);
+
+    /* Responsive card padding */
+    --card-padding: clamp(0.5rem, 1.5vh, 1.25rem);
+    --card-padding-lg: clamp(0.75rem, 2vh, 1.25rem);
+  }
+
+  /* Section content wrapper - ensures content fits viewport */
+  .section-content {
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   [data-scroll-container] {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
