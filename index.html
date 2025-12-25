@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drake: By The Numbers | Data Visualization Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --background: #0a0f14;
+      --foreground: #e8e6e3;
+      --amber: #f59e0b;
+      --amber-dim: rgba(245, 158, 11, 0.7);
+      --card-bg: rgba(255, 255, 255, 0.02);
+      --card-border: rgba(255, 255, 255, 0.05);
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 12vw, 8rem);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span {
+      color: var(--amber);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: rgba(232, 230, 227, 0.6);
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--amber);
+      color: var(--background);
+      padding: 1rem 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-primary svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Section styling */
+    section {
+      padding: 4rem 0;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 2rem;
+      background: var(--amber);
+      border-radius: 2px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1rem;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(245, 158, 11, 0.2);
+    }
+
+    .card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--amber);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .card p, .card li {
+      color: rgba(232, 230, 227, 0.6);
+      font-size: 0.95rem;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background: var(--amber);
+      border-radius: 50%;
+    }
+
+    /* Grid layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    /* Team section */
+    .team-member {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 0.75rem;
+    }
+
+    .team-avatar {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--amber), rgba(245, 158, 11, 0.5));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      color: var(--background);
+    }
+
+    .team-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .team-info p {
+      font-size: 0.85rem;
+      color: rgba(232, 230, 227, 0.5);
+    }
+
+    /* Video section */
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1rem;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgba(232, 230, 227, 0.4);
+    }
+
+    .video-placeholder svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1rem;
+      color: var(--amber);
+    }
+
+    /* Tech stack */
+    .tech-tag {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 2rem;
+      font-size: 0.85rem;
+      color: var(--amber);
+      margin: 0.25rem;
+    }
+
+    /* Links section */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1rem;
+      text-decoration: none;
+      color: var(--foreground);
+      transition: all 0.3s ease;
+    }
+
+    .link-card:hover {
+      border-color: var(--amber);
+      transform: translateY(-4px);
+    }
+
+    .link-card svg {
+      width: 32px;
+      height: 32px;
+      color: var(--amber);
+      flex-shrink: 0;
+    }
+
+    .link-card h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .link-card p {
+      font-size: 0.85rem;
+      color: rgba(232, 230, 227, 0.5);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--card-border);
+      text-align: center;
+      color: rgba(232, 230, 227, 0.3);
+      font-size: 0.85rem;
+    }
+
+    footer span {
+      color: var(--amber);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 2rem 1rem;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>
+        DRAKE<span>:</span><br>
+        BY THE <span>NUMBERS</span>
+      </h1>
+      <p>
+        An interactive data visualization exploring Drake's unprecedented dominance on the Billboard Hot 100 charts from 2009 to 2025.
+      </p>
+      <a href="https://drakebybillo.vercel.app" target="_blank" class="btn-primary">
+        VIEW LIVE DASHBOARD
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+      </a>
+    </section>
+
+    <!-- Team Members -->
+    <section>
+      <h2 class="section-title">TEAM MEMBERS</h2>
+      <div class="grid-3">
+        <div class="team-member">
+          <div class="team-avatar">MB</div>
+          <div class="team-info">
+            <h4>Muhammad Bilal</h4>
+            <p>Lead Developer & Designer</p>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">AM</div>
+          <div class="team-info">
+            <h4>Abdullah Mustafa</h4>
+            <p>Data Analyst</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Description -->
+    <section>
+      <h2 class="section-title">PROJECT DESCRIPTION</h2>
+      <div class="card">
+        <p>
+          <strong style="color: var(--amber);">Drake: By The Numbers</strong> is an immersive, horizontally-scrolling data visualization that chronicles Drake's historic journey on the Billboard Hot 100. From his first chart entry in 2009 with "Best I Ever Had" to becoming the most charted artist in Billboard history with 325 entries, this dashboard tells the story of an artist who redefined what chart dominance means.
+        </p>
+        <br>
+        <p>
+          The visualization features 12 interconnected sections, each exploring different aspects of Drake's career: his early beginnings, the momentum of his rise, his record-breaking album releases, collaboration network, career timeline, streaming statistics, and a comprehensive dashboard summarizing his achievements.
+        </p>
+      </div>
+    </section>
+
+    <!-- Dataset Description -->
+    <section>
+      <h2 class="section-title">DATASET DESCRIPTION</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>DATA SOURCE</h3>
+          <p style="margin-bottom: 1rem;">
+            <strong style="color: var(--amber);">drake_billboard_data.json</strong> — A comprehensive JSON dataset containing Drake's complete Billboard Hot 100 chart history from 2009 to 2025.
+          </p>
+          <ul>
+            <li>325 individual song entries with chart performance</li>
+            <li>Peak positions, weeks on chart, and debut dates</li>
+            <li>Collaboration and featuring artist data</li>
+            <li>Era-based categorization (2009-2011, 2012-2015, 2016-2018, 2019-2025)</li>
+            <li>Album associations and release information</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>KEY METRICS</h3>
+          <ul>
+            <li><strong>325</strong> Billboard Hot 100 entries (all-time record)</li>
+            <li><strong>13</strong> #1 hits</li>
+            <li><strong>81</strong> Top 10 hits</li>
+            <li><strong>3,268</strong> cumulative weeks on chart</li>
+            <li><strong>10.1</strong> average weeks per song</li>
+            <li><strong>186</strong> unique collaborators</li>
+            <li><strong>45 weeks</strong> longest charting song ("No Guidance")</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exploratory Data Analysis -->
+    <section>
+      <h2 class="section-title">EXPLORATORY DATA ANALYSIS</h2>
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <p style="margin-bottom: 1.5rem;">
+          Before building the visualization, we conducted an exploratory data analysis to understand the dataset's structure, identify patterns, and uncover insights that would inform our visual storytelling.
+        </p>
+        <h3>KEY FINDINGS</h3>
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div>
+            <h4 style="color: var(--amber); margin-bottom: 0.5rem;">Peak Position Distribution</h4>
+            <ul>
+              <li><strong>13</strong> songs reached #1 (4% of total)</li>
+              <li><strong>68</strong> songs peaked at #2-10 (21%)</li>
+              <li><strong>116</strong> songs peaked at #11-40 (36%)</li>
+              <li><strong>128</strong> songs peaked at #41-100 (39%)</li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="color: var(--amber); margin-bottom: 0.5rem;">Longevity Analysis</h4>
+            <ul>
+              <li>Mean weeks on chart: <strong>10.1</strong></li>
+              <li>Median weeks on chart: <strong>8</strong></li>
+              <li>Standard deviation: <strong>7.2 weeks</strong></li>
+              <li>Range: <strong>1 to 45 weeks</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>YEARLY TREND ANALYSIS</h3>
+          <p style="margin-bottom: 1rem;">Drake's chart presence has evolved significantly over his career:</p>
+          <ul>
+            <li><strong>2009-2011:</strong> 27 entries (breakthrough era)</li>
+            <li><strong>2012-2015:</strong> 61 entries (consistent growth)</li>
+            <li><strong>2016-2018:</strong> 90 entries (peak dominance)</li>
+            <li><strong>2019-2025:</strong> 147 entries (sustained success)</li>
+          </ul>
+          <p style="margin-top: 1rem; color: var(--amber);">Peak year: <strong>2020</strong> with 36 chart entries</p>
+        </div>
+        <div class="card">
+          <h3>COLLABORATION PATTERNS</h3>
+          <p style="margin-bottom: 1rem;">Analysis of Drake's collaborative network:</p>
+          <ul>
+            <li><strong>57%</strong> of entries are collaborations</li>
+            <li><strong>186</strong> unique collaborators identified</li>
+            <li>Top collaborator: <strong>Lil Wayne</strong> (23 songs)</li>
+            <li>Other frequent partners: Future (20), 21 Savage (17)</li>
+          </ul>
+          <p style="margin-top: 1rem;">Collaborations tend to have slightly higher peak positions on average.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 1.5rem;">
+        <h3>ANALYSIS NOTEBOOK</h3>
+        <p>The complete EDA was performed using Python with pandas, matplotlib, and seaborn. The Jupyter notebook includes:</p>
+        <ul style="margin-top: 1rem;">
+          <li>Data loading and cleaning procedures</li>
+          <li>Statistical summaries and distribution analysis</li>
+          <li>Visualization of peak positions and chart longevity</li>
+          <li>Year-over-year trend analysis</li>
+          <li>Collaboration network analysis</li>
+          <li>Era-based performance comparison</li>
+        </ul>
+        <a href="eda.ipynb" download="eda.ipynb" style="display: inline-block; margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--amber); color: var(--background); text-decoration: none; border-radius: 0.5rem; font-weight: 600;">
+          Download EDA Notebook (eda.ipynb)
+        </a>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: rgba(232, 230, 227, 0.5);">
+          Right-click and "Save link as..." if the download doesn't start automatically.
+        </p>
+      </div>
+    </section>
+
+    <!-- Tools & Technologies -->
+    <section>
+      <h2 class="section-title">TOOLS & TECHNOLOGIES</h2>
+      <div class="card">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span class="tech-tag">Next.js 14</span>
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">TypeScript</span>
+          <span class="tech-tag">Tailwind CSS</span>
+          <span class="tech-tag">WebGL Shaders</span>
+          <span class="tech-tag">Framer Motion</span>
+          <span class="tech-tag">SVG Visualizations</span>
+          <span class="tech-tag">Vercel</span>
+        </div>
+        <br>
+        <p>
+          The dashboard is built with <strong style="color: var(--foreground);">Next.js</strong> and <strong style="color: var(--foreground);">React</strong> for component-based architecture, styled with <strong style="color: var(--foreground);">Tailwind CSS</strong> for responsive design, and enhanced with <strong style="color: var(--foreground);">WebGL shaders</strong> for the immersive animated background. Custom <strong style="color: var(--foreground);">SVG visualizations</strong> power the charts and data displays.
+        </p>
+      </div>
+    </section>
+
+    <!-- Links -->
+    <section>
+      <h2 class="section-title">PROJECT LINKS</h2>
+      <div class="links-grid">
+        <a href="https://drakebybillo.vercel.app" target="_blank" class="link-card">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+          </svg>
+          <div>
+            <h4>LIVE DASHBOARD</h4>
+            <p>drakebybillo.vercel.app</p>
+          </div>
+        </a>
+        <a href="https://github.com/muhamad-bilal/drake-dataviz" target="_blank" class="link-card">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          <div>
+            <h4>GITHUB REPOSITORY</h4>
+            <p>Source code & documentation</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Video Walkthrough -->
+    <section>
+      <h2 class="section-title">VIDEO WALKTHROUGH</h2>
+      <div class="video-container">
+        <iframe src="https://www.youtube-nocookie.com/embed/QqOq7abSwIA" title="Drake: By The Numbers - Dashboard Walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <p style="text-align: center; margin-top: 1rem; color: rgba(232, 230, 227, 0.5); font-size: 0.9rem;">
+        If the video doesn't load, <a href="https://youtu.be/QqOq7abSwIA" target="_blank" style="color: #f59e0b;">watch it directly on YouTube</a>
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>
+        <span>Drake: By The Numbers</span> | Data Visualization Project | 2025
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
