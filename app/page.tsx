@@ -325,7 +325,7 @@ export default function Home() {
         </div>
 
         <a
-          href="https://github.com/muhamad-bilal"
+          href="https://github.com/muhamad-bilal/drakebybillo"
           target="_blank"
           rel="noopener noreferrer"
           className="flex h-10 w-10 items-center justify-center rounded-lg bg-foreground/15 backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-foreground/25"
