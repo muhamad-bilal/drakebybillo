@@ -306,7 +306,7 @@ export default function Home() {
         <div className="w-10" />
 
         <div className="hidden items-center gap-8 md:flex">
-          {["Home", "Section 1", "Section 2", "Section 3", "Section 4", "Section 5", "Section 6", "Section 7", "Legacy", "Section 8", "Section 9", "Dashboard"].map((item, index) => (
+          {["Home", "The Bottom", "Come Up", "Momentum", "Domination", "No New Friends", "Forever", "Flood", "Numbers", "Journey", "Streams", "Dashboard"].map((item, index) => (
             <button
               key={item}
               onClick={() => scrollToSection(index)}

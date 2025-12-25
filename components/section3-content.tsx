@@ -374,7 +374,7 @@ export function Section3Content({ isActive = false }: Section3ContentProps) {
                             </div>
                           </div>
                           <div className="p-2 rounded-xl bg-black/20 text-center">
-                            <div className="text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-small)' }}>
+                            <div className="text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                               {formatDate(hoveredSong.first_chart_date)}
                             </div>
                             <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
@@ -385,12 +385,12 @@ export function Section3Content({ isActive = false }: Section3ContentProps) {
 
                         {/* Collaborators */}
                         {hoveredSong.collaborators.length > 0 && (
-                          <div className="p-2 rounded-xl bg-black/20">
-                            <div className="text-foreground/40 uppercase tracking-wider mb-1" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
-                              Featuring
-                            </div>
-                            <div className="text-foreground/70" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
+                          <div className="p-2 rounded-xl bg-black/20 text-center">
+                            <div className="text-foreground/80" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'var(--text-stat-medium)' }}>
                               {hoveredSong.collaborators.join(", ")}
+                            </div>
+                            <div className="text-foreground/40" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'var(--text-small)' }}>
+                              Featuring
                             </div>
                           </div>
                         )}

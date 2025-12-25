@@ -45,11 +45,10 @@ export function Section9Content({ isActive = false }: Section9ContentProps) {
     return () => clearInterval(interval)
   }, [isVisible])
 
-  // Reset counter when section becomes inactive
+  // Reset counter flag when section becomes inactive (but keep the displayed value)
   useEffect(() => {
     if (!isActive) {
       countStarted.current = false
-      setCountedStreams(0)
     }
   }, [isActive])
 

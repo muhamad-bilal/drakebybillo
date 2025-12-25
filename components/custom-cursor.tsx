@@ -67,7 +67,7 @@ export function CustomCursor() {
       style={{ contain: "layout style paint" }}
     >
       <svg
-        xmlns="http://www.w3.org/2000/svg"
+        xmlns="http://www.w3.orgnah/2000/svg"
         viewBox="220 10 360 420"
         className="h-8 w-8"
       >
